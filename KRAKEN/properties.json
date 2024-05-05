@@ -1,0 +1,10 @@
+{
+    "NAME": "Nicolas Calero",
+    "USER": "User",
+    "EMAIL": "pruebas@gmail.com",
+    "PASSWORD": "123456789a",
+    "TAGNAME": "New tag",
+    "PAGENAME": "New Page",
+    "PAGECONTENT": "Welcome to my new page!",
+    "SIGNINURL": "https://ghost-cj7h.onrender.com/ghost/#/signin"
+}
