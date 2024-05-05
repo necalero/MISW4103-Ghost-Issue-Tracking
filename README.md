@@ -4,3 +4,9 @@ En este repositorio se especifican los issues relacionados a ghost, así como se
 Para ejecutar la suite de pruebas de Kraken, seguir el siguiente [tutorial](/KRAKEN/KRAKEN_README.md)
 
 Para ejecutar la suite de pruebas de Cypress, seguir el siguiente [tutorial](/CYPRESS/CYPRESS_README.md)
+
+### Integrantes del equipo
+- Nicolás Calero - ne.calero@uniandes.edu.co
+- Ana María Solano - a.solanop@uniandes.edu.co
+- Miguel Parra
+- Juan Romero
