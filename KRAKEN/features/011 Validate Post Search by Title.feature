@@ -15,3 +15,4 @@ Scenario: Crear miembro con nombre y correo ya existentes
   And I enter post name "<POSTSEARCH>"
   And I wait for 2 seconds
   Then I should see the post coming soon
+  And I wait for 2 seconds
