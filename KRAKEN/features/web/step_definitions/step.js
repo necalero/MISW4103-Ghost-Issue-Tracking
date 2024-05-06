@@ -171,6 +171,10 @@ When('I click on NewPost', async function(){
     return await element.click();
 });
 
+Then('I SortBy Recently updated', async function () {
+    let element = await this.driver.$('ul.ember-power-select-options > li:nth-child(3) ');
+    return await element.click();
+});
 Then('I publish post', async function () {
     let element = await this.driver.$('button.gh-btn.gh-btn-editor.darkgrey.gh-publish-trigger');
     return await element.click();
@@ -275,3 +279,6 @@ Then('I should get an error message that specifies that the member already exist
     let element = await this.driver.$('body.ember-application > div.gh-app > div.gh-viewport > main.gh-main > section.gh-canvas > div > form.member-basic-info-form > div.gh-member-settings > section.gh-main-section.columns-3 > div.gh-main-section-block.span-2 > div.gh-main-section-content.grey > div > div.gh-cp-member-email-name > div.form-group.max-width.error > p.response');
     return await element.click();
 });
+
+
+
