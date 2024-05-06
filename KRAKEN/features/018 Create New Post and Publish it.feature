@@ -1,7 +1,7 @@
-Feature: Validate Post Search by Title
+Feature: Crear Post
 
 @user1 @web
-Scenario: Crear miembro con nombre y correo ya existentes
+Scenario: 018 Create New Post and Publish it
   Given I navigate to page "<SIGNINURL>"
   And I wait for 5 seconds
   When I enter my email "<EMAIL>"

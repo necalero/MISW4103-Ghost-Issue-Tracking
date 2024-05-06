@@ -1,7 +1,7 @@
-Feature: Validate Post Search by Title
+Feature: Ver lista de paginas
 
 @user1 @web
-Scenario: Crear miembro con nombre y correo ya existentes
+Scenario: 015 Validate Recent Filters Pages
   Given I navigate to page "<SIGNINURL>"
   And I wait for 5 seconds
   When I enter my email "<EMAIL>"
