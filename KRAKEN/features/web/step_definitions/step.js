@@ -171,6 +171,15 @@ When('I click on NewPost', async function(){
     return await element.click();
 });
 
+When('I click on Access', async function(){
+    let element = await this.driver.$('div.gh-contentfilter-menu.gh-contentfilter-visibility');
+    return await element.click();
+});
+
+Then('I select public', async function () {
+    let element = await this.driver.$('ul.ember-power-select-options > li:nth-child(2) ');
+    return await element.click();
+});
 Then('I SortBy Recently updated', async function () {
     let element = await this.driver.$('ul.ember-power-select-options > li:nth-child(3) ');
     return await element.click();
