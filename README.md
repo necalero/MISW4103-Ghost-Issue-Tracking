@@ -8,5 +8,5 @@ Para ejecutar la suite de pruebas de Cypress, seguir el siguiente [tutorial](/CY
 ### Integrantes del equipo
 - Nicolás Calero - ne.calero@uniandes.edu.co
 - Ana María Solano - a.solanop@uniandes.edu.co
-- Miguel Parra
-- Juan Romero
+- Miguel Parra - ma.parrat@uniandes.edu.co
+- Juan Romero - jg.romero2@uniandes.edu.co
