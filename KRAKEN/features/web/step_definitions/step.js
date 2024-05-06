@@ -132,6 +132,108 @@ When('I click on save member', async function () {
     return await element.click();
 });
 
+When('I click on search', async function(){
+    let element = await this.driver.$('body.ember-application > div.gh-app > div.gh-viewport > nav.gh-nav > div.flex.flex-column.h-100 > header.gh-nav-menu > div.gh-nav-menu-search > button.gh-nav-btn-search')
+    return await element.click();
+});
+
+When('I click on Drafts', async function(){
+    let element = await this.driver.$('body.ember-application > div.gh-app > div.gh-viewport > nav.gh-nav > div.flex.flex-column.h-100 > section.gh-nav-body > div.gh-nav-top > ul:nth-child(2) > li:nth-child(1) > div.liquid-container.ember-view > div.liquid-child.ember-view > ul.gh-nav-view-list > li:nth-child(1)');
+    return await element.click();
+});
+
+When('I enter post name {kraken-string}', async function (value) {
+    let element = await this.driver.$('body.ember-application.epm-scrolling-disabled > div.epm-modal-container > div.epm-modal.fullscreen-modal-action.fullscreen-modal-wide > div.modal-content > div.gh-nav-search-modal > div.gh-nav-search-input > div.ember-basic-dropdown.ember-power-select-search > div.ember-view.ember-basic-dropdown-trigger.ember-basic-dropdown-trigger--in-place.ember-power-select-trigger > input');
+    //return await element.click();
+    return await element.setValue(value);
+});
+
+When('I write post title {kraken-string}', async function (value) {
+    let element = await this.driver.$('textarea.gh-editor-title.ember-text-area.gh-input.ember-view');
+    //return await element.click();
+    await element.setValue(value);
+    element = await this.driver.$('div.koenig-editor__editor-wrapper');
+    return await element.click();
+});
+When('I write post body {kraken-string}', async function (value) {
+    let element = await this.driver.$('div.koenig-editor__editor-wrapper');
+    await element.click();
+    return await element.setValue(value);
+});
+
+When('I click on SortBy', async function(){
+    let element = await this.driver.$('div.gh-contentfilter-menu.gh-contentfilter-sort');
+    return await element.click();
+});
+
+When('I click on NewPost', async function(){
+    let element = await this.driver.$('a.ember-view.gh-secondary-action.gh-nav-new-post');
+    return await element.click();
+});
+
+When('I click on Access', async function(){
+    let element = await this.driver.$('div.gh-contentfilter-menu.gh-contentfilter-visibility');
+    return await element.click();
+});
+
+When('I click on State', async function(){
+    let element = await this.driver.$('div.gh-contentfilter-menu.gh-contentfilter-type');
+    return await element.click();
+});
+
+Then('I select Right Now', async function () {
+    let element = await this.driver.$('div.gh-publish-setting.last > button');
+    await element.click();
+    element = await this.driver.$('div.gh-radio')
+    return await element.click();
+});
+
+Then('I confirm delete the post', async function () {
+    let element = await this.driver.$('button.gh-revert-to-draft');
+    return await element.click();
+});
+
+Then('I delete the post', async function () {
+    let element = await this.driver.$('button.gh-btn.gh-btn-editor.darkgrey.gh-unpublish-trigger');
+    return await element.click();
+});
+
+Then('I select first post', async function () {
+    let element = await this.driver.$('a.ember-view.permalink.gh-list-data.gh-post-list-title');
+    return await element.click();
+});
+
+Then('I select Published Pages', async function () {
+    let element = await this.driver.$('ul.ember-power-select-options > li:nth-child(3) ');
+    return await element.click();
+});
+
+Then('I select public', async function () {
+    let element = await this.driver.$('ul.ember-power-select-options > li:nth-child(2) ');
+    return await element.click();
+});
+Then('I SortBy Recently updated', async function () {
+    let element = await this.driver.$('ul.ember-power-select-options > li:nth-child(3) ');
+    return await element.click();
+});
+Then('I publish post', async function () {
+    let element = await this.driver.$('button.gh-btn.gh-btn-editor.darkgrey.gh-publish-trigger');
+    return await element.click();
+});
+
+Then('I click PublishPost', async function () {
+    let element = await this.driver.$('button.gh-btn.gh-btn-large.gh-btn-pulse.ember-view');
+    return await element.click();
+});
+Then('I click continue', async function () {
+    let element = await this.driver.$('button.gh-btn.gh-btn-black.gh-btn-large');
+    return await element.click();
+});
+
+Then('I should see the post coming soon', async function () {
+    let element = await this.driver.$('ul.ember-power-select-options > li.ember-power-select-group > ul.ember-power-select-options > li.ember-power-select-option');
+    return await element.click();
+});
 
 Then('I should see the all authors option', async function () {
     let element = await this.driver.$('#ember-basic-dropdown-wormhole > div > ul > li:nth-child(1)');
