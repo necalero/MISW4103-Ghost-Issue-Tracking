@@ -1,5 +1,5 @@
 import {faker} from '@faker-js/faker';
-
+const version = 'latest';
 Cypress.Commands.add('login', () => {
   cy.visit('https://ghost-cj7h.onrender.com/ghost/');
 
@@ -22,24 +22,32 @@ describe('Crear nueva miembro ', () => {
     cy.login();
   });
   it('Crea una nuevo miembro', () => {
+    const es ='es1'
+    let id =0;
     // THEN: User creates a new memeber
     cy.visit('https://ghost-cj7h.onrender.com/ghost/#/members/new');
     cy.wait(2000);
-
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     // WHEN: User types the known tag name "test"
     const email = faker.internet.email();
     cy.get('#member-name').type('miembro1', { force: true })
 
     cy.get('#member-email') // Target using data-test attribute
         .type(email);
-
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     cy.contains('Save').click();
 
     cy.wait(5000);
-
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     // THEN: The new tag with the known name "test" should be created
 
     cy.contains('miembro1').should('be.visible');
+
+    // Take screenshot and save it in the "data" folder
+    
   });
 });
 
@@ -52,24 +60,32 @@ describe('Crear nueva pagina ', () => {
 
   // THEN: User creates a new page with a name "test" content test
   it('Crea una nueva pagina con el nombre "test"', () => {
+    const es ='es2'
+    let id =0;
     cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/page');
     cy.wait(2000);
-
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     // WHEN: User types the known tag name "test"
 
     cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
         .type('This is the page title');
     cy.get('[class*="koenig-editor w-100 flex-grow relative center mb0 mt0 ember-view"]') // Target using data-test attribute
         .type('This is the page content');
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     cy.contains('Publish').click();
 
     cy.wait(5000);
-
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     // THEN: The new tag with the known name "test" should be created
 
     cy.contains('Continue, final review').click();
     cy.wait(2000);
     cy.contains('Publish page, right now').click();
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
   });
 });
 
@@ -82,11 +98,14 @@ describe('Validar filtros autores  ', () => {
 
   // THEN: User go to published pages
   it('display tag created', () => {
+    const es ='es3'
+    let id =0;
     cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts?type=published');
     cy.wait(2000);
-
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     // WHEN: User types the author of the page
-    const url = faker.internet.url();
+    
     cy.get('[class*="gh-contentfilter-menu gh-contentfilter-author"] ')
         .click();
 
@@ -96,7 +115,8 @@ describe('Validar filtros autores  ', () => {
     // THEN: Must show all the authors
 
     cy.contains('All authors');
-
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
 
   });
 });
@@ -111,11 +131,14 @@ describe('Validar filtros recientes  ', () => {
 
   // THEN: User go to published pages
   it('display tag created', () => {
+    const es ='es4'
+    let id =0;
     cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts?type=published');
     cy.wait(2000);
 
     // WHEN: User types the newest fist of the page
-    const url = faker.internet.url();
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     cy.get('[class*="gh-contentfilter-menu gh-contentfilter-sort"]')
         .click();
 
@@ -128,6 +151,8 @@ describe('Validar filtros recientes  ', () => {
     cy.contains('Oldest ');
     cy.contains('Recently updated');
     cy.contains('Open rate');
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
 
   });
 });
@@ -141,14 +166,16 @@ describe('Validar filtros accesos  ', () => {
 
   // THEN: User go to published pages
   it('display tag created', () => {
+    const es ='es5'
+    let id =0;
     cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts?type=published');
     cy.wait(2000);
 
     // WHEN: User types the visivility of the page
-    const url = faker.internet.url();
+    
     cy.get('[class*="gh-contentfilter-menu gh-contentfilter-visibility"]')
         .click();
-
+    
 
     cy.wait(5000);
 
@@ -158,7 +185,8 @@ describe('Validar filtros accesos  ', () => {
     cy.contains('Public');
     cy.contains('Members-only');
     cy.contains('Paid members-only');
-
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
   });
 });
 
@@ -171,11 +199,14 @@ describe('Validar filtros miembros  ', () => {
 
   // THEN: User go to published pages
   it('display tag created', () => {
+    const es ='es6'
+    let id =0;
     cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts?type=published');
     cy.wait(2000);
-
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     // WHEN: User types the visivility of the page
-    const url = faker.internet.url();
+
     cy.get('[class*="gh-contentfilter-menu gh-contentfilter-type gh-contentfilter-selected"]')
         .click();
 
@@ -190,6 +221,8 @@ describe('Validar filtros miembros  ', () => {
 
     cy.contains('Scheduled posts');
     cy.contains('Featured posts');
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
   });
 });
 
@@ -202,20 +235,25 @@ describe('Crear nueva etiqueta ', () => {
 
   // THEN: User creates a new tag with a known name "test"
   it('Crea una nueva etiqueta con el nombre "test"', () => {
+    const es ='es7'
+    let id =0;
     cy.visit('https://ghost-cj7h.onrender.com/ghost/#/tags/new');
     cy.wait(2000);
-
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     // WHEN: User types the known tag name "test"
     const tagName = 'test';
     cy.get('#tag-name')
         .should('be.visible')
         .type(tagName);
-
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     // WHEN: User clicks on the "Save" button
     cy.contains('Save').click();
 
     cy.wait(5000);
-
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     // THEN: The new tag with the known name "test" should be created
   });
 });
@@ -228,9 +266,12 @@ describe('Validar tag creado ', () => {
 
   // THEN: User go to published pages
   it('display tag created', () => {
+    const es ='es8'
+    let id =0;
     cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts?type=published');
     cy.wait(2000);
-
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     // WHEN: User types the known tag name "test"
     const url = faker.internet.url();
     cy.get('[class*="gh-contentfilter-menu gh-contentfilter-tag"]')
@@ -242,7 +283,8 @@ describe('Validar tag creado ', () => {
     // THEN: The new tag with the known name "test" should be created
 
     cy.contains('test');
-
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
   });
 });
 
@@ -256,9 +298,12 @@ describe('Crear nueva pagina con dominio diferente ', () => {
 
   // THEN: User creates a new page with a name "test" content test
   it('Crea una nueva pagina con el nombre "test"', () => {
+    const es ='es9'
+    let id =0;
     cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/page');
     cy.wait(2000);
-
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     // WHEN: User types the known tag name "test"
     const url = faker.internet.url();
     cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
@@ -266,25 +311,36 @@ describe('Crear nueva pagina con dominio diferente ', () => {
     cy.get('[class*="koenig-editor w-100 flex-grow relative center mb0 mt0 ember-view"]') // Target using data-test attribute
         .type('This is the page content');
     cy.wait(1000);
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]')
         .should('be.visible') // Optional assertion for visibility
         .click(); // Click the button
     cy.wait(1000);
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     cy.get('#url').type(url);
     cy.wait(1000);
     cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]')
         .should('be.visible') // Optional assertion for visibility
         .click(); // Click the button
     cy.wait(1000);
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     cy.contains('Publish').click();
 
     cy.wait(5000);
-
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     // THEN: The new tag with the known name "test" should be created
 
     cy.contains('Continue, final review').click();
     cy.wait(2000);
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     cy.contains('Publish page, right now').click();
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
   });
 });
 
@@ -298,22 +354,27 @@ describe('Crear nueva pagina,mostrar  preview ', () => {
 
   // THEN: User creates a new page must show the preview
   it('Crea una nueva pagina con el nombre "test"', () => {
+    const es ='es10'
+    let id =0;
     cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/page');
     cy.wait(2000);
-
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     // WHEN: User types the known tag name "test"
     cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
         .type('This is the page title');
     cy.get('[class*="koenig-editor w-100 flex-grow relative center mb0 mt0 ember-view"]') // Target using data-test attribute
         .type('This is the page content');
-
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
     cy.contains('Preview').click();
 
     cy.wait(5000);
 
     // THEN: The new tag with the known name "test" should be created
     cy.contains('Publish');
-
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
 
   });
 });
