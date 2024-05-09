@@ -6,5 +6,6 @@
     "TAGNAME": "New tag",
     "PAGENAME": "New Page",
     "PAGECONTENT": "Welcome to my new page!",
-    "SIGNINURL": "https://ghost-cj7h.onrender.com/ghost/#/signin"
+    "SIGNINURL": "https://ghost-cj7h.onrender.com/ghost/#/signin",
+    "OLDSIGNINURL": "https://ghost-a76u.onrender.com/ghost/#/signin"
 }

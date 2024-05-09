@@ -345,3 +345,43 @@ Then('I should get an error message that specifies that the member already exist
 
 
 
+
+// ---------------------------------- STEPS FOR GHOST V3.42 VERSION -------------------------------------------------------
+
+
+When('I click on tags on the old version', async function () {
+    let element = await this.driver.$('body > div.gh-app.ember-view > div.gh-viewport > nav > section.gh-nav-body > div.gh-nav-top > ul.gh-nav-list.gh-nav-manage > li:nth-child(4) > a');
+    return await element.click();
+});
+
+When('I click on new tag on the old version', async function () {
+    let element = await this.driver.$('body > div.gh-app.ember-view > div.gh-viewport > main.gh-main > section.gh-canvas.tags-view > header.gh-canvas-header.tags-header > section.view-actions > a');
+    return await element.click();
+});
+
+When('I click on save tag on the old version', async function () {
+    let element = await this.driver.$('body > div.gh-app.ember-view > div.gh-viewport > main.gh-main > section.gh-canvas > form.mb15 > header.gh-canvas-header > section.view-actions > button.gh-btn.gh-btn-blue.gh-btn-icon.ember-view');
+    return await element.click();
+});
+
+When('I click on members on the old version', async function () {
+    let element = await this.driver.$('body.ember-application > div.gh-app > div.gh-viewport > nav.gh-nav > div.flex.flex-column.h-100 > section.gh-nav-body > div.gh-nav-top > ul:nth-child(2) > li:nth-child(4)');
+    return await element.click();
+});
+
+When('I click on published on the old version', async function () {
+    let element = await this.driver.$('body.ember-application > div.gh-app.ember-view > div.gh-viewport > nav > section.gh-nav-body > div.gh-nav-top > ul:nth-child(2) > li:nth-child(2) > div > div > ul.gh-nav-view-list > li:nth-child(3) > a.ember-view');
+    return await element.click();
+});
+
+When('I click on order dropdown on the old version', async function () {
+    let element = await this.driver.$('body > div.gh-app.ember-view > div.gh-viewport > main.gh-main > section.gh-canvas > header.gh-canvas-header.post-header > section.view-actions > div.gh-contentfilter > div.gh-contentfilter-menu.gh-contentfilter-sort > div.ember-view.ember-basic-dropdown-trigger.ember-power-select-trigger.gh-contentfilter-menu-trigger');
+    return await element.click();
+});
+
+Then('I should see the created tag on the old version', async function () {
+    let element = await this.driver.$('body > div.gh-app.ember-view > div.gh-viewport > nav > section.gh-nav-body > div.gh-nav-top > ul.gh-nav-list.gh-nav-manage > li:nth-child(4) > a');
+    return await element.click();
+});
+
+
