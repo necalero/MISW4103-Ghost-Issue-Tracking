@@ -1,23 +1,22 @@
-const { Given, When, Then, AfterStep, BeforeAll } = require('@cucumber/cucumber');
+const { Given, When, Then, AfterStep } = require('@cucumber/cucumber');
 
 const fs = require('fs');
 var step = 1
 
-BeforeAll(async function(){
-    const rutaCarpeta = './reports/'+this.testScenarioId+'/PantallazosGhost';
-    fs.mkdir(rutaCarpeta, { recursive: true }, (error) => {
-        if (error) {
-            console.error('Error al crear la carpeta:', error);
-        } else {
-            console.log('Carpeta creada exitosamente');
-        }
-    });
-
-});
-
 AfterStep(async function () {
+    if (step === 1) {
+        const rutaCarpeta = './reports/'+this.testScenarioId+'/PantallazosGhost';
+        fs.promises.mkdir(rutaCarpeta, { recursive: true }, (error) => {
+            if (error) {
+                console.error('Error al crear la carpeta:', error);
+            } else {
+                console.log('Carpeta creada exitosamente');
+            }
+    });        
+    }
+
     let screenshot = await this.driver.saveScreenshot(
-        `./reports/${this.testScenarioId}/screenshots1/${step}.png`
+        `./reports/${this.testScenarioId}/PantallazosGhost/${step}.png`
     );
     step ++
     this.attach(screenshot, 'image/png')
