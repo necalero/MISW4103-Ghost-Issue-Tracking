@@ -1,4 +1,26 @@
-const { Given, When, Then } = require('@cucumber/cucumber');
+const { Given, When, Then, AfterStep } = require('@cucumber/cucumber');
+
+const fs = require('fs');
+var step = 1
+
+AfterStep(async function () {
+    if (step === 1) {
+        const rutaCarpeta = './reports/'+this.testScenarioId+'/PantallazosGhost';
+        fs.promises.mkdir(rutaCarpeta, { recursive: true }, (error) => {
+            if (error) {
+                console.error('Error al crear la carpeta:', error);
+            } else {
+                console.log('Carpeta creada exitosamente');
+            }
+    });        
+    }
+
+    let screenshot = await this.driver.saveScreenshot(
+        `./reports/${this.testScenarioId}/PantallazosGhost/${step}.png`
+    );
+    step ++
+    this.attach(screenshot, 'image/png')
+});
 
 When('I enter my email {kraken-string}', async function (value) {
     let element = await this.driver.$('#login.gh-signin > div > span.gh-input-icon.gh-icon-mail > input');
