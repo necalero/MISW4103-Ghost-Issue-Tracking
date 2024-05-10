@@ -1,7 +1,7 @@
 Feature: Ver lista de paginas
 
 @user1 @web
-Scenario: 017 Validate Page State Filters
+Scenario: 017 Validate Page State Filters ... v5.14.1
   Given I navigate to page "<SIGNINURL>"
   And I wait for 5 seconds
   When I enter my email "<EMAIL>"

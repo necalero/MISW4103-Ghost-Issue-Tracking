@@ -1,7 +1,7 @@
 Feature: Ver publicaciones
 
 @user1 @web
-Scenario: Ordenar publicaciones por recientes
+Scenario: OrdenarPublicacionesPorRecientes...v3.42
   Given I navigate to page "<OLDSIGNINURL>"
   And I wait for 2 seconds
   When I enter my email "<EMAIL>"

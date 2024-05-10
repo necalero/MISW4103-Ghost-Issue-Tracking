@@ -1,7 +1,7 @@
 Feature: Crear Post
 
 @user1 @web
-Scenario: 018 Create New Post and Publish it
+Scenario: 018 Create New Post and Publish it ... v5.14.1
   Given I navigate to page "<SIGNINURL>"
   And I wait for 5 seconds
   When I enter my email "<EMAIL>"

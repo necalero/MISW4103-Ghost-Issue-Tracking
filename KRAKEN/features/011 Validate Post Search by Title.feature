@@ -1,7 +1,7 @@
 Feature: Ver posts
 
 @user1 @web
-Scenario: Validate Post Search by Title
+Scenario: Validate Post Search by Title ... v5.14.1
   Given I navigate to page "<SIGNINURL>"
   And I wait for 5 seconds
   When I enter my email "<EMAIL>"
