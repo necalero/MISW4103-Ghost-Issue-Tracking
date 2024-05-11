@@ -1,9 +1,8 @@
 import {faker} from '@faker-js/faker';
+
 const version = 'latest';
 Cypress.Commands.add('login', () => {
   cy.visit('https://ghost-cj7h.onrender.com/ghost/');
-
-
   cy.get('.email').type('pruebas@gmail.com');
   cy.get('.password').type('f7m9R:Ng8K!EM!c');
 
@@ -47,7 +46,7 @@ describe('Crear nueva miembro ', () => {
     cy.contains('miembro1').should('be.visible');
 
     // Take screenshot and save it in the "data" folder
-    
+
   });
 });
 
@@ -105,7 +104,7 @@ describe('Validar filtros autores  ', () => {
     cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
     id++;
     // WHEN: User types the author of the page
-    
+
     cy.get('[class*="gh-contentfilter-menu gh-contentfilter-author"] ')
         .click();
 
@@ -172,10 +171,10 @@ describe('Validar filtros accesos  ', () => {
     cy.wait(2000);
 
     // WHEN: User types the visivility of the page
-    
+
     cy.get('[class*="gh-contentfilter-menu gh-contentfilter-visibility"]')
         .click();
-    
+
 
     cy.wait(5000);
 
@@ -378,260 +377,192 @@ describe('Crear nueva pagina,mostrar  preview ', () => {
 
   });
 });
-
 describe('Validar filtro Published para posts', () => {
   beforeEach(() => {
-    // WHEN: User logs in before each test
     cy.login();
   });
 
   it('Debería mostrar las posts Published', () => {
-    cy.viewport(1536, 678)
-
+    const es ='es11'
+    let id =0;
     cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts?type=published')
-
-    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
-
-    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
-
-    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
-
-    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
-
-    cy.get('.view-actions > .gh-contentfilter > .gh-contentfilter-type > .ember-view > .ember-power-select-selected-item').click()
-
-
-    // Verificar que se muestren las posts en published
     cy.contains('Published posts').should('be.visible');
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
   });
 });
 
 describe('Validar filtro Draft para posts', () => {
   beforeEach(() => {
-    // WHEN: User logs in before each test
     cy.login();
   });
 
   it('Debería mostrar las posts Draft', () => {
-    cy.viewport(1536, 678)
-
+    const es ='es12'
+    let id =0;
     cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts?type=draft')
-
-    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
-
-    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
-
-    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
-
-    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
-
-    cy.get('.view-actions > .gh-contentfilter > .gh-contentfilter-type > .ember-view > .ember-power-select-selected-item').click()
-
-
-    // Verificar que se muestren las posts draft
     cy.contains('Draft posts').should('be.visible');
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
   });
 });
 
 describe('Validar filtro Scheduled para posts', () => {
   beforeEach(() => {
-    // WHEN: User logs in before each test
     cy.login();
   });
 
   it('Debería mostrar las posts Scheduled', () => {
-    cy.viewport(1536, 678)
-
-    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts?type=draft')
-
-    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
-
-    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
-
-    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
-
-    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember24').click()
-
-    cy.get('.view-actions > .gh-contentfilter > .gh-contentfilter-type > .ember-view > .ember-power-select-selected-item').click()
-
-    // Verificar que se muestren las posts scheduled
+    const es ='es13'
+    let id =0;
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts?type=scheduled')
     cy.contains('Scheduled posts').should('be.visible');
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
   });
 });
+
 describe('Validar filtro por titulo', () => {
   beforeEach(() => {
-    // WHEN: User logs in before each test
     cy.login();
   });
 
   it('Debería buscar post por titulo', () => {
-    cy.viewport(1536, 730);
-
-    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts?type=scheduled');
-
-    cy.get('.gh-nav > .flex > .gh-nav-menu > .gh-nav-menu-details > .gh-nav-menu-details-sitetitle').click();
-
-    cy.get('.gh-nav-menu > .gh-nav-menu-search > .gh-nav-btn-search > span > svg').click();
-
-    cy.get('.modal-content > .gh-nav-search-modal > .gh-nav-search-input > .ember-basic-dropdown > .ember-view').click();
-
-    cy.get('.gh-nav-search-modal > .gh-nav-search-input > .ember-basic-dropdown > .ember-view > .gh-input-with-select-input').click();
-
-    cy.get('.gh-nav-search-modal > .gh-nav-search-input > .ember-basic-dropdown > .ember-view > .gh-input-with-select-input').type('Coming soon');
-
-    // Presionar la tecla Enter
-    cy.get('.gh-nav-search-modal > .gh-nav-search-input > .ember-basic-dropdown > .ember-view > .gh-input-with-select-input').type('{enter}');
-
-
+    const es ='es14'
+    let id =0;
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts')
+    cy.get('.gh-nav-btn-search').click();
+    cy.get('.gh-nav-search-input').type('Coming soon{enter}');
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
   });
 });
 
 describe('Validate Recent Filters Pages', () => {
   beforeEach(() => {
-    // WHEN: User logs in before each test
     cy.login();
   });
 
   it('Debería mostrar los filtros recientes para las paginas', () => {
+    const es ='es15'
+    let id =0;
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/pages')
+    cy.get('.gh-contentfilter-sort .ember-power-select-selected-item').click();
+    cy.wait(2000);
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+  });
+});
+describe('Validar filtros accesos paginas', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Debería mostrar los filtros de accesos para las paginas', () => {
+    const es ='es16'
+    let id =0;
     cy.viewport(1536, 678)
 
     cy.visit('https://ghost-cj7h.onrender.com/ghost/#/pages')
 
-    cy.get('.gh-viewport > .gh-main > .gh-canvas > .gh-canvas-header > .gh-canvas-header-content').click()
-
-    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > li > #ember81').click()
-
-    cy.get('.view-actions > .gh-contentfilter > .gh-contentfilter-sort > .ember-view > .ember-power-select-selected-item').click()
-
-    cy.get('.view-actions > .gh-contentfilter > .gh-contentfilter-sort > .ember-view > .ember-power-select-selected-item').click()
-
-    cy.get('.view-actions > .gh-contentfilter > .gh-contentfilter-sort > .ember-view > .ember-power-select-selected-item').click()
-
-    cy.get('.view-actions > .gh-contentfilter > .gh-contentfilter-sort > .ember-view > .ember-power-select-selected-item').click()
-
-
-    cy.wait(2000);
-
-
-    cy.contains('Newest');
-    cy.contains('Oldest');
-    cy.contains('Recently updated');
-  });
-});
-
-describe('Validar filtros accesos paginas', () => {
-  beforeEach(() => {
-    // WHEN: User logs in before each test
-    cy.login();
-  });
-
-  it('Debería  filtros accesos paginas', () => {
-    cy.viewport(1536, 678)
-
-    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/dashboard')
-
-    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > li > #ember26').click()
-
     cy.get('.view-actions > .gh-contentfilter > .gh-contentfilter-visibility > .ember-view > .ember-power-select-selected-item').click()
-
-
-    cy.wait(2000);
-
-
-    cy.contains('All access');
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
   });
 });
-
+//
 describe('Validar filtro estado paginas', () => {
   beforeEach(() => {
-    // WHEN: User logs in before each test
     cy.login();
   });
 
-  it('Debería  filtros estado paginas', () => {
-    cy.viewport(1536, 678)
+  it('Debería mostrar los filtros de estado para las paginas', () => {
 
-    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/dashboard')
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/pages')
+    describe('test_name', function() {
 
-    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > li > #ember11').click()
+      it('deberia verifiacr el filtro por estado de paginas', function() {
+        const es ='es17'
+        let id =0;
+        cy.viewport(1536, 678)
 
-    cy.get('.gh-canvas-header-content > .view-actions > .gh-contentfilter > .gh-contentfilter-type > .ember-view').click()
+        cy.visit('https://ghost-cj7h.onrender.com/ghost/#/pages')
 
+        cy.get('.gh-canvas-header-content > .view-actions > .gh-contentfilter > .gh-contentfilter-type > .ember-view').click()
+        cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+      })
 
-    cy.wait(2000);
+    })
 
-
-    cy.contains('All posts');
   });
 });
-
+//
 describe('Crear nuevo post y publicarlo', () => {
   beforeEach(() => {
-    // WHEN: User logs in before each test
     cy.login();
   });
 
-  it('Debería  Crear un nuevo post y publicarlo', () => {
-    cy.viewport(1536, 678)
+  it('Debería crear un nuevo post y publicarlo', () => {
+    const es ='es18'
+    let id =0;
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts')
+    cy.get('[class*="ember-view gh-btn gh-btn-primary view-actions-top-row"]') // Target using data-test attribute
+        .type('This is the post title');
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('This is the post content');
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.wait(20000);
+    cy.contains('Publish').click();
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
+    cy.contains('Continue, final review →').click();
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
+    cy.contains('Publish post, right now').click();
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
 
-    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/dashboard')
-
-    cy.get('.gh-nav-body > .gh-nav-top > .gh-nav-list > .gh-nav-list-new > #ember9').click()
-
-    cy.get('.gh-canvas-header > .gh-canvas-header-content > .view-actions > #ember95 > span').click()
-
-    cy.get('.flex > #ember162 > .gh-koenig-editor > .gh-koenig-editor-pane > #ember166').click()
-
-    cy.get('#ember162 > .gh-editor-header > .flex > .darkgrey > span').click()
-    cy.wait(2000);
-
-    cy.get('.flex > .gh-publish-settings-container > .gh-publish-cta > .gh-btn > span').click()
-
-    cy.get('.flex > .gh-publish-settings-container > .gh-publish-cta > #ember182 > span').click()
-    cy.wait(2000);
-
-    cy.get('.gh-publish-settings-container > .gh-post-bookmark-wrapper > .gh-post-bookmark-container > .gh-post-bookmark > .gh-post-bookmark-content').click()
-
-    cy.visit('https://ghost-cj7h.onrender.com/nuevo-post/')
-
-    cy.get('#ember172 > .flex > .gh-publish-header > .gh-btn-editor > span').click()
-
-    cy.get('#ember162 > .gh-editor-header > .flex > #ember163 > span').click()
   });
 });
-
+//
 describe('Eliminar post', () => {
   beforeEach(() => {
-    // WHEN: User logs in before each test
     cy.login();
   });
 
-  it('Debería  Eliminar posts', () => {
-    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/pages');
-    cy.get('.darkgrey:nth-child(2) > span').click();
-    cy.get('.gh-revert-to-draft > span').click();
-    cy.contains('Draft').should('be.visible');
+  it('Debería eliminar un post', () => {
+    cy.viewport(1536, 678)
+    const es ='es19'
+    let id =0;
+
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts')
+    cy.get('[class*="ember-view gh-btn gh-btn-primary view-actions-top-row"]') // Target using data-test attribute
+        .type('This is the post title');
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('This is the post content');
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    id++;
+    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click()
+    cy.contains('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    cy.contains('Delete').click();
+
   });
 });
 
 describe('Crear post y programarlo', () => {
   beforeEach(() => {
-    // WHEN: User logs in before each test
     cy.login();
   });
 
-  it('Debería Crear post y programarlo', () => {
-    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/pages');
-    cy.get('#ember1506').type('post schedule');
-    cy.get('.gh-koenig-editor-pane').click();
-    cy.get('.gh-editor-header .darkgrey > span').click();
-    cy.get('.last .gh-publish-setting-trigger > span').click();
-    cy.get('.active > label').click();
-    cy.get('.gh-revert-to-draft > span').click();
+  it('Debería crear un post y programarlo', () => {
+    const es ='es20'
+    let id =0;
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts')
+    cy.get('[class*="ember-view gh-btn gh-btn-primary view-actions-top-row"]') // Target using data-test attribute
+        .type('This is the post title');
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('This is the post content');
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.wait(20000);
+    cy.contains('Publish').click();
+    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
 
   });
 });
-
-
-
 
