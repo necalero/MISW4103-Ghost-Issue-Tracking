@@ -431,10 +431,6 @@ When('I click on NewPost', async function(){
     return await element.click();
 });
 
-When('I click on NewPost old', async function(){
-    let element = await this.driver.$('a.gh-secondary-action.gh-nav-new-post.ember-view');
-    return await element.click();
-});
 
 When('I click on Access', async function(){
     let element = await this.driver.$('div.gh-contentfilter-menu.gh-contentfilter-visibility');
@@ -486,20 +482,12 @@ Then('I publish post', async function () {
     return await element.click();
 });
 
-Then('I publish post old', async function () {
-    let element = await this.driver.$('div.ember-view.ember-basic-dropdown-trigger.gh-btn.gh-btn-outline.gh-publishmenu-trigger');
-    return await element.click();
-});
 
 Then('I click PublishPost', async function () {
     let element = await this.driver.$('button.gh-btn.gh-btn-large.gh-btn-pulse.ember-view');
     return await element.click();
 });
 
-Then('I click Publish old', async function () {
-    let element = await this.driver.$('button.gh-btn.gh-btn-blue.gh-publishmenu-button.gh-btn-icon ember-view');
-    return await element.click();
-});
 Then('I click continue', async function () {
     let element = await this.driver.$('button.gh-btn.gh-btn-black.gh-btn-large');
     return await element.click();
@@ -632,9 +620,32 @@ When('I click on order dropdown on the old version', async function () {
     return await element.click();
 });
 
+When('I click on NewPost old', async function(){
+    let element = await this.driver.$('a.gh-secondary-action.gh-nav-new-post.ember-view');
+    return await element.click();
+});
+
+When('I click on Published old', async function () {
+    let element = await this.driver.$('section.gh-nav-body > div.gh-nav-top > ul.gh-nav-list.gh-nav-manage > li.gh-nav-list-new.relative > div > div > ul.gh-nav-view-list > li > a');
+    return await element.click();
+});
+
+When('I click on Drafts old', async function(){
+    let element = await this.driver.$('section.gh-nav-body > div.gh-nav-top > ul.gh-nav-list.gh-nav-manage > li.gh-nav-list-new.relative > div > div > ul.gh-nav-view-list > li:nth-child(1)');
+    return await element.click();
+});
+
 Then('I should see the created tag on the old version', async function () {
     let element = await this.driver.$('body > div.gh-app.ember-view > div.gh-viewport > nav > section.gh-nav-body > div.gh-nav-top > ul.gh-nav-list.gh-nav-manage > li:nth-child(4) > a');
     return await element.click();
 });
 
+Then('I publish post old', async function () {
+    let element = await this.driver.$('div.ember-view.ember-basic-dropdown-trigger.gh-btn.gh-btn-outline.gh-publishmenu-trigger');
+    return await element.click();
+});
 
+Then('I click Publish old', async function () {
+    let element = await this.driver.$('button.gh-btn.gh-btn-blue.gh-publishmenu-button.gh-btn-icon.ember-view');
+    return await element.click();
+});
