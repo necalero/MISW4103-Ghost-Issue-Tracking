@@ -1,0 +1,112 @@
+{
+  "id": "ghost_vrt_tests",
+  "viewports": [
+    {
+      "name": "desktop",
+      "width": 800,
+      "height": 600
+    }
+  ],
+  "scenarios": [
+    {
+      "label": "Crear nueva pagina",
+      "url": "https://ghost-a76u.onrender.com/ghost/#/editor/page",
+      "readyEvent": "",
+      "readySelector": "",
+      "delay": 0,
+      "hideSelectors": [],
+      "removeSelectors": [],
+      "hoverSelector": "",
+      "clickSelector": "",
+      "postInteractionWait": 0,
+      "selectors": [],
+      "selectorExpansion": true,
+      "expect": 0,
+      "misMatchThreshold" : 4,
+      "requireSameDimensions": true
+    },
+    {
+      "label": "Filtros autores",
+      "url": "https://ghost-a76u.onrender.com/ghost/#/posts?type=published",
+      "readyEvent": "",
+      "readySelector": "",
+      "delay": 0,
+      "hideSelectors": [],
+      "removeSelectors": [],
+      "hoverSelector": "",
+      "clickSelector": "",
+      "postInteractionWait": 0,
+      "selectors": [],
+      "selectorExpansion": true,
+      "expect": 0,
+      "misMatchThreshold" : 4,
+      "requireSameDimensions": true
+    },
+    {
+      "label": "Crear nueva pagina y mostrar preview",
+      "url": "https://ghost-a76u.onrender.com/ghost/#/editor/page",
+      "delay": 0,
+      "hideSelectors": [],
+      "removeSelectors": [],
+      "hoverSelector": "",
+      "clickSelector": "",
+      "postInteractionWait": 0,
+      "selectors": [],
+      "selectorExpansion": true,
+      "expect": 0,
+      "misMatchThreshold" : 4,
+      "requireSameDimensions": true
+    },
+    {
+      "label": "Crear nuevo post y publicarlo",
+      "url": "https://ghost-a76u.onrender.com/ghost/#/posts",
+      "delay": 0,
+      "hideSelectors": [],
+      "removeSelectors": [],
+      "hoverSelector": "",
+      "clickSelector": "",
+      "postInteractionWait": 0,
+      "selectors": [],
+      "selectorExpansion": true,
+      "expect": 0,
+      "misMatchThreshold" : 4,
+      "requireSameDimensions": true
+    },
+    {
+      "label": "Validate Recent Filters Pages",
+      "url": "https://ghost-a76u.onrender.com/ghost/#/pages",
+      "delay": 0,
+      "hideSelectors": [],
+      "removeSelectors": [],
+      "hoverSelector": "",
+      "clickSelector": "",
+      "postInteractionWait": 0,
+      "selectors": [],
+      "selectorExpansion": true,
+      "expect": 0,
+      "misMatchThreshold" : 4,
+      "requireSameDimensions": true
+    }
+  ],
+  "paths": {
+    "bitmaps_reference": "cypress/screenshots/data/version3_42_0_blackstop",
+    "bitmaps_test": "backstop_data/bitmaps_test",
+    "engine_scripts": "backstop_data/engine_scripts",
+    "html_report": "backstop_data/html_report",
+    "ci_report": "backstop_data/ci_report"
+  },
+  "report": [
+    "browser"
+  ],
+  "engine": "puppeteer",
+  "engineOptions": {
+    "args": [
+      "--no-sandbox"
+    ]
+  },
+  "asyncCaptureLimit": 50,
+  "asyncCompareLimit": 50,
+  "debug": false,
+  "debugWindow": false,
+  "misMatchThreshold": 10
+}
