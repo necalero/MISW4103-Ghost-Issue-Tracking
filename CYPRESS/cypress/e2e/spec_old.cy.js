@@ -128,48 +128,30 @@ describe('Crear nuevo post y publicarlo', () => {
   it('Debería crear un nuevo post y publicarlo', () => {
     const es ='es4'
     let id =0;
-    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts')
-    cy.get('[class*="ember-view gh-btn gh-btn-primary view-actions-top-row"]') // Target using data-test attribute
-        .type('This is the post title');
+    cy.visit('https://ghost-a76u.onrender.com/ghost/#/posts')
+    cy.contains('New post').click();
     cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
-        .type('This is the post content');
+        .type('This is the post Title');
     cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
     id++;
     cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
-    cy.wait(20000);
     cy.contains('Publish').click();
-    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
-    id++;
-    cy.contains('Continue, final review →').click();
-    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
-    id++;
-    cy.contains('Publish post, right now').click();
     cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
 
   });
 });
-//
-describe('Eliminar post', () => {
+
+describe('Validate Recent Filters Pages', () => {
   beforeEach(() => {
     cy.login();
   });
 
-  it('Debería eliminar un post', () => {
-    cy.viewport(1536, 678)
+  it('Debería mostrar los filtros recientes para las paginas', () => {
     const es ='es5'
     let id =0;
-
-    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts')
-    cy.get('[class*="ember-view gh-btn gh-btn-primary view-actions-top-row"]') // Target using data-test attribute
-        .type('This is the post title');
-    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
-        .type('This is the post content');
+    cy.visit('https://ghost-a76u.onrender.com/ghost/#/pages')
+    cy.get('.gh-contentfilter-sort .ember-power-select-selected-item').click();
+    cy.wait(2000);
     cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
-    id++;
-    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click()
-    cy.contains('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
-    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
-    cy.contains('Delete').click();
-
   });
 });

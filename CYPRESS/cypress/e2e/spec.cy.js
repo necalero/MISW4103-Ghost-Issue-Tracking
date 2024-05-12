@@ -538,7 +538,6 @@ describe('Eliminar post', () => {
     cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
     id++;
     cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click()
-    cy.contains('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
     cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
     cy.contains('Delete').click();
 
