@@ -22,7 +22,7 @@
       "selectors": [],
       "selectorExpansion": true,
       "expect": 0,
-      "misMatchThreshold" : 4,
+      "misMatchThreshold" : 0.1,
       "requireSameDimensions": true
     },
     {
@@ -39,7 +39,7 @@
       "selectors": [],
       "selectorExpansion": true,
       "expect": 0,
-      "misMatchThreshold" : 4,
+      "misMatchThreshold" : 0.1,
       "requireSameDimensions": true
     },
     {
@@ -54,7 +54,7 @@
       "selectors": [],
       "selectorExpansion": true,
       "expect": 0,
-      "misMatchThreshold" : 4,
+      "misMatchThreshold" : 0.1,
       "requireSameDimensions": true
     },
     {
@@ -69,7 +69,7 @@
       "selectors": [],
       "selectorExpansion": true,
       "expect": 0,
-      "misMatchThreshold" : 4,
+      "misMatchThreshold" : 0.1,
       "requireSameDimensions": true
     },
     {
@@ -84,7 +84,7 @@
       "selectors": [],
       "selectorExpansion": true,
       "expect": 0,
-      "misMatchThreshold" : 4,
+      "misMatchThreshold" : 0.1,
       "requireSameDimensions": true
     }
   ],
@@ -108,5 +108,5 @@
   "asyncCompareLimit": 50,
   "debug": false,
   "debugWindow": false,
-  "misMatchThreshold": 10
+  "misMatchThreshold": 0.1
 }
