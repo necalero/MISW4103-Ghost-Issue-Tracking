@@ -1,5 +1,5 @@
 const { Given, When, Then, Before, AfterStep, After, setWorldConstructor } = require('@cucumber/cucumber');
-const compareImages = require("resemblejs/compareImages");
+const compareImages = require("resemblejs/compareImages")
 const config = require("../../../config.json");
 const fs = require('fs');
 const {options } = config;
@@ -16,30 +16,130 @@ function CustomWorld({ attach, parameters, ...other }) {
 Before(async function (scenario) {
     this.scenarioName = scenario.pickle.name;
     await createDirectory(`./reports/VRT/`)
-    await createDirectory(`./reports/VRT/Results/`);
-    await createDirectory(`./reports/VRT/Results/${this.scenarioName.split('...')[0]}/`);
-    await createDirectory(`./reports/VRT/Results/${this.scenarioName.split('...')[0]}/Steps/`);
-
 });
 
 setWorldConstructor(CustomWorld);
 
 AfterStep(async function () {
-    
-    let stepString = step.toString();
-
-    // Pad the string with leading zeros if necessary
-    while (stepString.length < 3) {
-        stepString = '0' + stepString;
+    if (step === 1) {
+        const rutaCarpeta = `./reports/VRT/${this.scenarioName}/`;
+        await fs.promises.mkdir(rutaCarpeta, { recursive: true }, (error) => {
+            if (error) {
+                console.error('Error al crear la carpeta:', error);
+            } else {
+                console.log('Carpeta creada exitosamente');
+            }
+        });        
     }
 
-    await createDirectory(`./reports/VRT/Results/${this.scenarioName.split('...')[0]}/Steps/${stepString}`);
-    let saveRoute = this.scenarioName.includes('v5') ? `./reports/VRT/Results/${this.scenarioName.split('...')[0]}/Steps/${stepString}/after.png` : `./reports/VRT/Results/${this.scenarioName.split('...')[0]}/Steps/${stepString}/before.png`;
-
-    let screenshot = await this.driver.saveScreenshot(saveRoute);
+    let screenshot = await this.driver.saveScreenshot(
+        `./reports/VRT/${this.scenarioName}/${step}.png`
+    );
     step ++
     this.attach(screenshot, 'image/png')
 });
+
+After(async function () {
+    // Check if the version being tested is v5.14.1
+    const trimmedScenarioName = this.scenarioName.split('...')[0];
+    if (this.scenarioName.includes('v5')) {
+        // Check if the folder for version 3.42 exists
+        const folderPath = `./reports/VRT/${trimmedScenarioName}...v3.42/`;
+        if (fs.existsSync(folderPath)) {
+            // Run visual regression tests
+            console.log("SUCCESS!! VRT executed for v5.14.1")
+            let itemsInFolder = countItemsInFolder(folderPath);
+            console.log(itemsInFolder);
+            for(let i = 1; i <= itemsInFolder; i ++ )
+            {
+                await executeVRT(trimmedScenarioName, i);
+            }
+
+        } else {
+            console.log('Folder for version 3.42 does not exist. Wont run VRT until screenshots are recollected for other version.');
+        }
+    } else if (this.scenarioName.includes('v3')) {
+        // Check if the folder for version 5.14.1 exists
+        const folderPath = `./reports/VRT/${trimmedScenarioName}...v5.14.1/`;
+        if (fs.existsSync(folderPath)) {
+            // Run visual regression tests
+            console.log("SUCCESS!! VRT executed for v3.42")
+            let itemsInFolder = countItemsInFolder(folderPath);
+            console.log(itemsInFolder);
+            for(let i = 1; i <= itemsInFolder; i ++ )
+            {
+                await executeVRT(trimmedScenarioName, i);
+            }
+        } else {
+            console.log('Folder for version 5.14.1 does not exist. Wont run VRT until screenshots are recollected for other version.');
+        }
+    } else {
+        console.log('Scenario does not belong to either version v5.14.1 or v3.42');
+    }
+});
+
+async function executeVRT(scenarioName, i){
+    console.log("Entered execute VRT function: ");
+
+    try {
+        const imagePathV3 = `./reports/VRT/${scenarioName}...v3.42/${i}.png`;
+        const imagePathV5 = `./reports/VRT/${scenarioName}...v5.14.1/${i}.png`;
+    
+        if (fs.existsSync(imagePathV3) && fs.existsSync(imagePathV5)) {
+            const data = await compareImages(
+                fs.readFileSync(imagePathV3),
+                fs.readFileSync(imagePathV5),
+                options
+            );
+            console.log("Data obtained: "+data.misMatchPercentage);
+            let resultInfo = {}
+            resultInfo[0] = {
+                isSameDimensions: data.isSameDimensions,
+                dimensionDifference: data.dimensionDifference,
+                rawMisMatchPercentage: data.rawMisMatchPercentage,
+                misMatchPercentage: data.misMatchPercentage,
+                diffBounds: data.diffBounds,
+                analysisTime: data.analysisTime
+            }
+            console.log("Result info is: " + JSON.stringify(resultInfo));
+
+            await createDirectory(`./reports/VRT/Results/`);
+            await createDirectory(`./reports/VRT/Results/${scenarioName}`);
+            await createDirectory(`./reports/VRT/Results/${scenarioName}/Steps`);
+            await createDirectory(`./reports/VRT/Results/${scenarioName}/Steps/${i}`);
+            
+            // let comparisonImage = data.getBuffer();
+            let stepReportHtml =  createStepReport(scenarioName, i, resultInfo[0]);
+
+            let steps = {}
+            
+            let stepCount = await countItemsInFolder(`./reports/VRT/${scenarioName}...v3.42/`);
+
+            for(let i = 1; i < stepCount; i++)
+            {
+                steps[i] = i;
+            }
+
+
+
+            let scenarioReportHtml =  createScenarioReport(scenarioName, steps);
+
+            fs.writeFileSync(`./reports/VRT/Results/${scenarioName}/Steps/${i}/compared.png`, data.getBuffer());
+            fs.copyFileSync(imagePathV3, `./reports/VRT/Results/${scenarioName}/Steps/${i}/before.png`);
+            fs.copyFileSync(imagePathV5, `./reports/VRT/Results/${scenarioName}/Steps/${i}/after.png`);
+            if (!fs.existsSync(`./reports/VRT/Results/vrtReport.css`)) {
+                fs.copyFileSync('./vrtReport.css', `./reports/VRT/Results/vrtReport.css`);
+            }
+            fs.writeFileSync(`./reports/VRT/Results/${scenarioName}/Steps/${i}/report.html`, stepReportHtml);
+            fs.writeFileSync(`./reports/VRT/Results/${scenarioName}/report.html`, scenarioReportHtml);
+        } else {
+            console.log('One or both of the images does not exist.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+    
+}
 
 async function createDirectory(path){
     if (!fs.existsSync(path)) {
@@ -52,6 +152,110 @@ async function createDirectory(path){
         }); 
     }       
 }
+
+function createScenarioReport(scenarioName, steps)
+{
+    return `
+    <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VRT Report</title>
+    <link rel="stylesheet" href="../vrtReport.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Scenario ${scenarioName} Report</h1>
+    </header>
+    <main>
+      <div id="visualizer">
+        <h2>Please select the step you would like to inspect:</h2>
+        <div class="gallery-container" id="scenario-gallery">   
+          ${Object.keys(steps).map(step => createStepCard(step))}
+        </div>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+    
+    `
+}
+
+function createStepCard(step) {
+    return `
+      <div class="gallery-item">
+        <a href="./Steps/${step}/report.html">
+          <img src="./Steps/${step}/compared.png" alt="Step ${step}" />
+          <h3>Step ${step}</h3>
+        </a>
+      </div>
+    `;
+  }
+
+function createStepReport(scenarioName, i, resInfo){
+    return `
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>VRT Report</title>
+        <link rel="stylesheet" href="../../../vrtReport.css" />
+    </head>
+    <body>
+        <header>
+        <h1>${scenarioName} - Step ${i} Report</h1>
+        </header>
+        <main>
+        <div class="main-layout">
+            <div class="comparison-info">
+            <h2>Comparison Information</h2>
+            <ul>
+                <li>Same Dimensions: ${resInfo.isSameDimensions} <span id="sameDimensions"></span></li>
+                <li>MisMatch Percentage: ${resInfo.misMatchPercentage} <span id="misMatchPercentage"></span></li>
+                <li>Analysis Time: ${resInfo.analysisTime} <span id="analysisTime"></span> ms</li>
+            </ul>
+            </div>
+
+            <div class="report-visualizer">
+            <div class="image-container">
+                <div class="image">
+                <img src="./before.png" alt="Before" />
+                <h2>v3.42</h2>
+                </div>
+                <div class="image">
+                <img src="./after.png" alt="After" />
+                <h2>v5.14.1</h2>
+                </div>
+            </div>
+            <div class="final-image-container">
+                <img src="./compared.png" alt="Final" />
+                <h2>Overlap</h2>
+            </div>
+            </div>
+        </div>
+        </main>
+
+        <script src="script.js"></script>
+    </body>
+    </html>
+`
+}
+
+function countItemsInFolder(folderPath) {
+    try {
+        // Read the contents of the folder synchronously
+        const items = fs.readdirSync(folderPath);
+        // Count the number of items
+        const itemCount = items.length;
+        return itemCount;
+    } catch (error) {
+        console.error('Error:', error);
+        return -1; // Return -1 to indicate an error
+    }
+}
+
 
 
 
@@ -227,6 +431,7 @@ When('I click on NewPost', async function(){
     return await element.click();
 });
 
+
 When('I click on Access', async function(){
     let element = await this.driver.$('div.gh-contentfilter-menu.gh-contentfilter-visibility');
     return await element.click();
@@ -277,10 +482,12 @@ Then('I publish post', async function () {
     return await element.click();
 });
 
+
 Then('I click PublishPost', async function () {
     let element = await this.driver.$('button.gh-btn.gh-btn-large.gh-btn-pulse.ember-view');
     return await element.click();
 });
+
 Then('I click continue', async function () {
     let element = await this.driver.$('button.gh-btn.gh-btn-black.gh-btn-large');
     return await element.click();
@@ -413,9 +620,32 @@ When('I click on order dropdown on the old version', async function () {
     return await element.click();
 });
 
+When('I click on NewPost old', async function(){
+    let element = await this.driver.$('a.gh-secondary-action.gh-nav-new-post.ember-view');
+    return await element.click();
+});
+
+When('I click on Published old', async function () {
+    let element = await this.driver.$('section.gh-nav-body > div.gh-nav-top > ul.gh-nav-list.gh-nav-manage > li.gh-nav-list-new.relative > div > div > ul.gh-nav-view-list > li > a');
+    return await element.click();
+});
+
+When('I click on Drafts old', async function(){
+    let element = await this.driver.$('section.gh-nav-body > div.gh-nav-top > ul.gh-nav-list.gh-nav-manage > li.gh-nav-list-new.relative > div > div > ul.gh-nav-view-list > li:nth-child(1)');
+    return await element.click();
+});
+
 Then('I should see the created tag on the old version', async function () {
     let element = await this.driver.$('body > div.gh-app.ember-view > div.gh-viewport > nav > section.gh-nav-body > div.gh-nav-top > ul.gh-nav-list.gh-nav-manage > li:nth-child(4) > a');
     return await element.click();
 });
 
+Then('I publish post old', async function () {
+    let element = await this.driver.$('div.ember-view.ember-basic-dropdown-trigger.gh-btn.gh-btn-outline.gh-publishmenu-trigger');
+    return await element.click();
+});
 
+Then('I click Publish old', async function () {
+    let element = await this.driver.$('button.gh-btn.gh-btn-blue.gh-publishmenu-button.gh-btn-icon.ember-view');
+    return await element.click();
+});
