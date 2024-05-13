@@ -6,6 +6,7 @@ Para ejecutar la suite de pruebas de Kraken, seguir el siguiente [tutorial](/KRA
 Para ejecutar la suite de pruebas de Cypress, seguir el siguiente [tutorial](/CYPRESS/CYPRESS_README.md)
 
 ### BackstopJS:
+tutorial para correr en el proyecto backstop y cypress : https://github.com/necalero/MISW4103-Ghost-Issue-Tracking/blob/main/CYPRESS/CYPRESS_README.md
 
 Pros:
 
