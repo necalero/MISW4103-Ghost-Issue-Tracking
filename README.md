@@ -5,6 +5,8 @@ Para ejecutar la suite de pruebas de Kraken, seguir el siguiente [tutorial](/KRA
 
 Para ejecutar la suite de pruebas de Cypress, seguir el siguiente [tutorial](/CYPRESS/CYPRESS_README.md)
 
+> Los reportes de VRT de ResembleJS se ejecutan automáticamente al ejecutar KRAKEN
+
 ## Pros y Contras de Cada Herramienta
 [Click](https://github.com/necalero/MISW4103-Ghost-Issue-Tracking/wiki/Pros-y-Contras) para ver los pros y contras de cada herramienta utilizada
 
