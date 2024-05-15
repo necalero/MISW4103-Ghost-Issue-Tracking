@@ -1,7 +1,7 @@
 Feature: Crear etiqueta
 
 @user1 @web
-Scenario: Crear etiqueta con nombre
+Scenario: CrearEtiquetaConNombre...v5.14.1
   Given I navigate to page "<SIGNINURL>"
   And I wait for 2 seconds
   When I enter my email "<EMAIL>"

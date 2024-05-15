@@ -1,7 +1,7 @@
 Feature: Crear miembro
 
 @user1 @web
-Scenario: Crear miembro con nombre y correo ya existentes
+Scenario: CrearMiembroConNombreYCorreoYaExistente...v5.14.1
   Given I navigate to page "<SIGNINURL>"
   And I wait for 5 seconds
   When I enter my email "<EMAIL>"
