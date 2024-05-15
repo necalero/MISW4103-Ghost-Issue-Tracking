@@ -14,6 +14,92 @@ Cypress.Commands.add('login', () => {
   cy.wait(2000);
 });
 
+// GIVEN: User is logged in
+describe('Modificar el campo twiter en la página de configuración de personal [Dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the Twitter field with a known value
+  it('Modifica el campo twiter y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User provides a known Twitter handle
+    const newt = 'MiguelParra';
+    cy.get('#user-twitter').scrollIntoView()
+  
+      .clear()
+      .type(newt,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The Twitter field should be successfully updated with the full Twitter URL
+    cy.get('#user-twitter').scrollIntoView().should('have.value', 'https://twitter.com/' + newt);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo Twiter en la página de configuración de personal [Dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the Twitter field with valid random data
+  it('Modifica el campo twiter y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates a valid random Twitter handle using faker
+    const newT = faker.person.firstName();
+    cy.get('#user-twitter').scrollIntoView()
+     
+      .clear()
+      .type(newT,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The Twitter field should be successfully updated with the full Twitter URL
+    cy.get('#user-twitter').scrollIntoView().should('have.value', 'https://twitter.com/' + newT);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo Twiter en la página de configuración de personal [Dato aleatorio ]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the Twitter field with valid random words
+  it('Modifica el campo fb y verifica el cambio', () => {
+    cy.visit(url +'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates valid random words using faker
+    const newT = faker.word.adjective();
+    cy.get('#user-twitter').scrollIntoView()
+      
+      .clear()
+      .type(newT,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The Twitter field should be successfully updated with the full Twitter URL
+    cy.get('#user-twitter').scrollIntoView().should('have.value', 'https://twitter.com/' + newT);
+  });
+});
 
 // GIVEN: User is logged in
 describe('Modificar el campo bio en la página de configuración de personal [Dato conocido]', () => {
