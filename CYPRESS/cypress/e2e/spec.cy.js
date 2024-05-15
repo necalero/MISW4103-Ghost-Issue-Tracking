@@ -14,6 +14,96 @@ Cypress.Commands.add('login', () => {
   cy.wait(2000);
 });
 
+
+// GIVEN: User is logged in
+describe('Modificar el campo bio en la página de configuración de personal [Dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the bio field with a known value
+  it('Modifica el campo bio y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User provides a known bio
+    const newBio = 'Escritor reconocido en el campo de las pruebas automaticas, esta triste porque los tutores no reconocen su trabajo como tester.';
+    cy.get('#user-bio').scrollIntoView()
+      
+      .clear()
+      .type(newBio,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The bio field should be successfully updated
+    cy.get('#user-bio').scrollIntoView().should('have.value', newBio);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo bio en la página de configuración de personal [Dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the bio field with valid random data
+  it('Modifica el campo bio y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates valid random bio using faker
+    const newBio = faker.lorem.paragraph();
+    cy.get('#user-bio').scrollIntoView()
+     
+      .clear()
+      .type(newBio,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The bio field should be successfully updated
+    cy.get('#user-bio').scrollIntoView().should('have.value', newBio);
+  });
+});
+
+
+// GIVEN: User is logged in
+describe('Modificar el campo Bio en la página de configuración de personal [Dato aleatorio ]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the bio field with valid random words
+  it('Modifica el campo  bio y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates valid random words using faker
+    const newBio = faker.word.words();
+    cy.get('#user-bio').scrollIntoView()
+  
+      .clear()
+      .type(newBio,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The bio field should be successfully updated
+    cy.get('#user-bio').scrollIntoView().should('have.value', newBio);
+  });
+});
+
+
 // GIVEN: User is logged in
 describe('Modificar el campo website en la página de configuración de personal [Dato conocido]', () => {
   beforeEach(() => {
