@@ -1,5 +1,5 @@
 import {faker} from '@faker-js/faker';
-
+const url = 'https://ghost-cj7h.onrender.com/ghost/'
 const version = 'latest';
 Cypress.Commands.add('login', () => {
   cy.visit('https://ghost-cj7h.onrender.com/ghost/');
@@ -13,6 +13,97 @@ Cypress.Commands.add('login', () => {
 
   cy.wait(2000);
 });
+
+// GIVEN: User is logged in
+describe('Modificar el campo website en la página de configuración de personal [Dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the website field with a known value
+  it('Modifica el campo website y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User provides a known website
+    const newWebsite = 'https://sistemas.uniandes.edu.co/es/isis';
+    cy.get('#user-website').scrollIntoView()
+      .clear()
+      .type(newWebsite,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The website field should be successfully updated
+    cy.get('#user-website').scrollIntoView().should('have.value', newWebsite);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo website en la página de configuración de personal [Dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the website field with valid random data
+  it('Modifica el campo website y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates a valid random website using faker
+    const newWebsite = faker.internet.url();
+    cy.get('#user-website').scrollIntoView()
+      
+      .clear()
+      .type(newWebsite,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The website field should be successfully updated
+    cy.get('#user-website').scrollIntoView().should('have.value', newWebsite);
+  });
+});
+
+
+// GIVEN: User is logged in
+describe('Modificar el campo website en la página de configuración de personal [Dato aleatorio ]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User attempts to modify the website field with valid random words
+  it('Modifica el campo website y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates valid random words using faker
+    const newWebsite = faker.word.words();
+    cy.get('#user-website').scrollIntoView()
+      
+      .clear()
+      .type(newWebsite,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The system should display a message indicating that the website is not a valid URL
+    cy.contains('Website is not a valid url');
+  });
+});
+
+
+
+
 
 // GIVEN: User is logged in
 describe('Crear nueva miembro ', () => {
