@@ -1,7 +1,7 @@
 Feature: Crear página
 
 @user1 @web
-Scenario: Previsualizar creación de página con nombre y contenido
+Scenario: PrevisualizarCreaciónDePáginaConNombreYContenido...v5.14.1
   Given I navigate to page "<SIGNINURL>"
   And I wait for 2 seconds
   When I enter my email "<EMAIL>"

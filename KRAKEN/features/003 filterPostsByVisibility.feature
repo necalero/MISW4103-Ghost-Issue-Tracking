@@ -1,7 +1,7 @@
 Feature: Ver publicaciones
 
 @user1 @web
-Scenario: Filtrar publicaciones por visibilidad publica
+Scenario: FiltrarPublicacionesPorVisibilidadPublica...v5.14.1
   Given I navigate to page "<SIGNINURL>"
   And I wait for 2 seconds
   When I enter my email "<EMAIL>"
