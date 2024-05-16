@@ -18,6 +18,159 @@ Cypress.on('uncaught:exception', (err, runnable) => {
   return false;
 });
 // GIVEN: User is logged in
+describe('Modificar email miembro n [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN:User modifty member info
+  it('Modify user email', () => {
+    cy.visit(url+'#/members/66453639fc0cfa0022f23401');
+    cy.wait(2000);
+
+    // WHEN: User mofify  name
+ 
+    cy.get('#member-email').clear().type('MemberN@gmail.com',{force: true});
+
+    // WHEN: User clicks on "Save"
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: User should see a success message indicating the member was updated  
+    cy.contains("MemberN@gmail.com");
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar email miembro n [estrategia dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN:User modifty member info
+  it('Modify user email', () => {
+    cy.visit(url+'#/members/66453639fc0cfa0022f23401');
+    cy.wait(2000);
+
+    // WHEN: User mofify  name
+    const name = faker.internet.email();
+    cy.get('#member-email').clear().type(name,{force: true});
+
+    // WHEN: User clicks on "Save"
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: User should see a success message indicating the member was updated  
+    cy.contains(name);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar email miembro n [estrategia dato aleatorio ]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN:User modifty member info
+  it('Modify user email', () => {
+    cy.visit(url+'#/members/66453639fc0cfa0022f23401');
+    cy.wait(2000);
+
+    // WHEN: User mofify  name
+    const name = faker.word.words();
+    cy.get('#member-email').clear().type(name,{force: true});
+
+    // WHEN: User clicks on "Save"
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+   
+  });
+});
+// GIVEN: User is logged in
+describe('Modificar nombre miembro n [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN:User modifty member info
+  it('Modify user name', () => {
+    cy.visit(url+'#/members/66453639fc0cfa0022f23401');
+    cy.wait(2000);
+
+    // WHEN: User mofify  name
+ 
+    cy.get('#member-name').clear().type('MemberN',{force: true});
+
+    // WHEN: User clicks on "Save"
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: User should see a success message indicating the member was updated  
+    cy.contains("MemberN").should('be.visible');
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar nombre miembro n [estrategia dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN:User modifty member info
+  it('Modify user name', () => {
+    cy.visit(url+'#/members/66453639fc0cfa0022f23401');
+    cy.wait(2000);
+
+    // WHEN: User mofify  name
+    const name = faker.name.firstName();
+    cy.get('#member-name').clear().type(name,{force: true});
+
+    // WHEN: User clicks on "Save"
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: User should see a success message indicating the member was updated  
+    cy.contains(name).should('be.visible');
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar nombre miembro n [estrategia dato aleatorio ]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN:User modifty member info
+  it('Modify user name', () => {
+    cy.visit(url+'#/members/66453639fc0cfa0022f23401');
+    cy.wait(2000);
+
+    // WHEN: User mofify  name
+    const name = faker.word.words();
+    cy.get('#member-name').clear().type(name,{force: true});
+
+    // WHEN: User clicks on "Save"
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: User should see a success message indicating the member was updated  
+    cy.contains(name).should('be.visible');
+  });
+});
+// GIVEN: User is logged in
 describe('Crear un newsletter  [estrategia dato conocido]', () => {
   beforeEach(() => {
     // WHEN: User logs in before each test
