@@ -13,6 +13,88 @@ Cypress.Commands.add('login', () => {
 
   cy.wait(2000);
 });
+
+
+// GIVEN: User is logged in
+describe('Invitar a un nuevo miembro del personal nuevo [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User navigates to staff settings and sends an invitation with known email
+  it('Accede a la página de configuración de personal y envía una invitación', () => {
+    cy.visit(url+'#/settings/staff');
+    cy.wait(2000);
+
+    // WHEN: User clicks on "Invite" and provides a known email
+    cy.contains('Invite').click();
+    cy.wait(2000);
+    cy.get('input[name="email"]').type('miguel.parra@bizagi.com');
+
+    // WHEN: User clicks on "Send invitation now"
+    cy.contains('Send invitation now').click();
+
+    cy.wait(5000);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Invitar a un nuevo miembro del personal nuevo [estrategia dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User navigates to staff settings and sends an invitation with a valid random email
+  it('Accede a la página de configuración de personal y envía una invitación', () => {
+    cy.visit(url+'#/settings/staff');
+    cy.wait(2000);
+
+    // WHEN: User clicks on "Invite" and provides a valid random email using faker
+    cy.contains('Invite').click();
+    cy.wait(2000);
+    const email = faker.internet.email();
+    cy.get('input[name="email"]').type(email);
+
+    // WHEN: User clicks on "Send invitation now"
+    cy.contains('Send invitation now').click();
+
+    cy.wait(5000);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Invitar a un nuevo miembro del personal nuevo [estrategia dato aleatorio ]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User navigates to staff settings and attempts to send an invitation with invalid random email
+  it('Accede a la página de configuración de personal y envía una invitación', () => {
+    // WHEN: User visits staff settings
+    cy.visit(url+'#/settings/staff');
+    cy.wait(2000);
+
+    // WHEN: User clicks on "Invite"
+    cy.contains('Invite').click();
+    cy.wait(2000);
+
+    // WHEN: User provides an invalid random email using faker
+    const email = faker.word.words();
+    cy.get('input[name="email"]').type(email);
+
+    // WHEN: User clicks on "Send invitation now"
+    cy.contains('Send invitation now').click();
+
+    cy.wait(5000);
+
+    // THEN: User should see an error message indicating an invalid email
+    cy.contains('Invalid Email.').should('be.visible');
+  });
+});
+
 // GIVEN: User is logged in
 describe('Modificar el campo user-name en la página de configuración de personal [Dato conocido]', () => {
   beforeEach(() => {
