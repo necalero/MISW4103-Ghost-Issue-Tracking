@@ -15,6 +15,94 @@ Cypress.Commands.add('login', () => {
 });
 
 // GIVEN: User is logged in
+describe('Modificar el campo facebook en la página de configuración de personal [Dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the Facebook field with a known value
+  it('Modifica el campo fb y verifica el cambio', () => {
+    cy.visit(url +'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User provides a known Facebook handle
+    const newFB = 'MiguelParra';
+    cy.get('#user-facebook').scrollIntoView()
+    
+      .clear()
+      .type(newFB,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The Facebook field should be successfully updated with the full Facebook URL
+    cy.get('#user-facebook').scrollIntoView().should('have.value', 'https://www.facebook.com/' + newFB);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo Facebook en la página de configuración de personal [Dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the Facebook field with valid random data
+  it('Modifica el campo fb y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates a valid random Facebook handle using faker
+    const newFB = faker.person.firstName();
+    cy.get('#user-facebook').scrollIntoView()
+      
+      .clear()
+      .type(newFB,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The Facebook field should be successfully updated with the full Facebook URL
+    cy.get('#user-facebook').scrollIntoView().should('have.value', 'https://www.facebook.com/' + newFB);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo FACEBOOK en la página de configuración de personal [Dato aleatorio ]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the Facebook field with valid random words
+  it('Modifica el campo fb y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates valid random words using faker
+    const newFB = faker.word.adjective();
+    cy.get('#user-facebook').scrollIntoView()
+      
+      .clear()
+      .type(newFB,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The Facebook field should be successfully updated with the full Facebook URL
+    cy.get('#user-facebook').scrollIntoView().should('have.value', 'https://www.facebook.com/' + newFB);
+  });
+});
+
+
+// GIVEN: User is logged in
 describe('Modificar el campo twiter en la página de configuración de personal [Dato conocido]', () => {
   beforeEach(() => {
     // WHEN: User logs in before each test
