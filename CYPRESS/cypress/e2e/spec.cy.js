@@ -14,6 +14,93 @@ Cypress.Commands.add('login', () => {
   cy.wait(2000);
 });
 // GIVEN: User is logged in
+describe('Modificar el campo user-name en la página de configuración de personal [Dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the user-name field with a known value
+  it('Modifica el campo user-name y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User provides a known user-name
+    const newUserName = 'nuevoNombreDeUsuario';
+    cy.get('#user-name')
+    
+      .clear()
+      .type(newUserName,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The user-name field should be successfully updated
+    cy.get('#user-name').should('have.value', newUserName);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo user-name en la página de configuración de personal [Dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the user-name field with valid random data
+  it('Modifica el campo user-name y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates a valid random user-name using faker
+    const newUserName = faker.person.firstName();
+    cy.get('#user-name')
+      
+      .clear()
+      .type(newUserName,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The user-name field should be successfully updated
+    cy.get('#user-name').should('have.value', newUserName);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo user-name en la página de configuración de personal [Dato aleatorio]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the user-name field with valid random words
+  it('Modifica el campo user-name y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates valid random words for user-name using faker
+    const newUserName = faker.word.words();
+    cy.get('#user-name')
+
+      .clear()
+      .type(newUserName,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The user-name field should be successfully updated
+    cy.get('#user-name').should('have.value', newUserName);
+  });
+});
+
+// GIVEN: User is logged in
 describe('Modificar el campo user-location en la página de configuración de personal [Dato conocido]', () => {
   beforeEach(() => {
     // WHEN: User logs in before each test
