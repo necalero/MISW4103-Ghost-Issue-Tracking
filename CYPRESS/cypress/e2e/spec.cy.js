@@ -13,7 +13,93 @@ Cypress.Commands.add('login', () => {
 
   cy.wait(2000);
 });
+// GIVEN: User is logged in
+describe('Modificar el campo user-location en la página de configuración de personal [Dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
 
+  // THEN: User modifies the location field with a known value
+  it('Modifica el campo location y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User provides a known location
+    const newLocation = 'Bogota';
+    cy.get('#user-location').scrollIntoView()
+    
+      .clear()
+      .type(newLocation,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The location field should be successfully updated
+    cy.get('#user-location').scrollIntoView().should('have.value', newLocation);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo user-location en la página de configuración de personal [Dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the location field with valid random data
+  it('Modifica el campo location y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates a valid random location using faker
+    const newLocation = faker.location.city();
+    cy.get('#user-location').scrollIntoView()
+
+      .clear()
+      .type(newLocation,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The location field should be successfully updated
+    cy.get('#user-location').scrollIntoView().should('have.value', newLocation);
+  });
+});
+
+
+// GIVEN: User is logged in
+describe('Modificar el campo user-location en la página de configuración de personal [Dato aleatorio ]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the location field with random words
+  it('Modifica el campo location y verifica el cambio', () => {
+    cy.visit(url +'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates random words for location using faker
+    const newLocation = faker.word.words();
+    cy.get('#user-location').scrollIntoView()
+
+      .clear()
+      .type(newLocation,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The location field should be successfully updated
+    cy.get('#user-location').scrollIntoView().should('have.value', newLocation);
+  });
+});
 // GIVEN: User is logged in
 describe('Modificar el campo facebook en la página de configuración de personal [Dato conocido]', () => {
   beforeEach(() => {
