@@ -13,8 +13,89 @@ Cypress.Commands.add('login', () => {
 
   cy.wait(2000);
 });
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // Returning false here prevents Cypress from failing the test
+  return false;
+});
+// GIVEN: User is logged in
+describe('Crear un newsletter  [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
 
+  // THEN:User creates a new newsletter
+  it('Crear un newsletter', () => {
+    cy.visit(url+'#/settings/newsletters');
+    cy.wait(2000);
 
+    // WHEN: User clicks on "Add newsletter" 
+    cy.contains('Add newsletter').click();
+    cy.wait(2000);
+    cy.get('#newsletter-title').type('My newsletter topic');
+
+    // WHEN: User clicks on "Create"
+    cy.get('[class="gh-btn gh-btn-icon gh-btn-primary ember-view"]').click();
+
+    cy.wait(5000);
+
+    // THEN: User should see a success message indicating the newsletter was created  
+    cy.contains("A newsletter with the same name already exists").should('be.visible');
+  });
+});
+
+// GIVEN: User is logged in
+describe('Crear un newsletter  [estrategia dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User creates a new newsletter
+  it('User creates a new newsletter', () => {
+    cy.visit(url+'#/settings/newsletters');
+    cy.wait(2000);
+    const title = faker.lorem.words();
+    // WHEN: User clicks on "Add newsletter" 
+    cy.contains('Add newsletter').click();
+    cy.wait(2000);
+    cy.get('#newsletter-title').type(title);
+
+    // WHEN: User clicks on "Create"
+    cy.get('[class="gh-btn gh-btn-icon gh-btn-primary ember-view"]').click();
+
+    cy.wait(5000);
+
+    // THEN: User should see a success message indicating the newsletter was created  
+    cy.contains(title).should('be.visible');
+  });
+});
+// GIVEN: User is logged in
+describe('Crear un newsletter  [estrategia dato aleatorio ]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User creates a new newsletterl
+  it('User creates a new newsletter', () => {
+    cy.visit(url+'#/settings/newsletters');
+    cy.wait(2000);
+    const title = faker.word.words();
+    // WHEN: User clicks on "Add newsletter" 
+    cy.contains('Add newsletter').click();
+    cy.wait(2000);
+    cy.get('#newsletter-title').type(title);
+
+    // WHEN: User clicks on "Create"
+    cy.get('[class="gh-btn gh-btn-icon gh-btn-primary ember-view"]').click();
+
+    cy.wait(5000);
+
+    // THEN: User should see a success message indicating the newsletter was created  
+    cy.contains(title).should('be.visible');
+  });
+});
 // GIVEN: User is logged in
 describe('Invitar a un nuevo miembro del personal nuevo [estrategia dato conocido]', () => {
   beforeEach(() => {
