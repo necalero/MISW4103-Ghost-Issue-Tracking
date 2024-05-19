@@ -13,6 +13,12 @@ Para ejecutar la suite de pruebas de Cypress, seguir el siguiente [tutorial](/CY
 ## Video Analisis VRT
 [Click](https://youtu.be/WvVsuirbIkw) para ver el video analisis de VRT
 
+## Descripción de las Estrategias Usadas y su Integración en los Escenarios de Pruebas
+[Click](https://github.com/necalero/MISW4103-Ghost-Issue-Tracking/wiki/Generacion-de-Datos) para ver la descripción de las estrategias utilizadas.
+
+
+
+
 ### Integrantes del equipo
 - Nicolás Calero - ne.calero@uniandes.edu.co
 - Ana María Solano - a.solanop@uniandes.edu.co
