@@ -1,5 +1,5 @@
 import {faker} from '@faker-js/faker';
-
+const url = 'https://ghost-cj7h.onrender.com/ghost/'
 const version = 'latest';
 Cypress.Commands.add('login', () => {
   cy.visit('https://ghost-cj7h.onrender.com/ghost/');
@@ -13,6 +13,850 @@ Cypress.Commands.add('login', () => {
 
   cy.wait(2000);
 });
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // Returning false here prevents Cypress from failing the test
+  return false;
+});
+// GIVEN: User is logged in
+describe('Modificar email miembro n [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN:User modifty member info
+  it('Modify user email', () => {
+    cy.visit(url+'#/members/66453639fc0cfa0022f23401');
+    cy.wait(2000);
+
+    // WHEN: User mofify  name
+ 
+    cy.get('#member-email').clear().type('MemberN@gmail.com',{force: true});
+
+    // WHEN: User clicks on "Save"
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: User should see a success message indicating the member was updated  
+    cy.contains("MemberN@gmail.com");
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar email miembro n [estrategia dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN:User modifty member info
+  it('Modify user email', () => {
+    cy.visit(url+'#/members/66453639fc0cfa0022f23401');
+    cy.wait(2000);
+
+    // WHEN: User mofify  name
+    const name = faker.internet.email();
+    cy.get('#member-email').clear().type(name,{force: true});
+
+    // WHEN: User clicks on "Save"
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: User should see a success message indicating the member was updated  
+    cy.contains(name);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar email miembro n [estrategia dato aleatorio ]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN:User modifty member info
+  it('Modify user email', () => {
+    cy.visit(url+'#/members/66453639fc0cfa0022f23401');
+    cy.wait(2000);
+
+    // WHEN: User mofify  name
+    const name = faker.word.words();
+    cy.get('#member-email').clear().type(name,{force: true});
+
+    // WHEN: User clicks on "Save"
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+   
+  });
+});
+// GIVEN: User is logged in
+describe('Modificar nombre miembro n [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN:User modifty member info
+  it('Modify user name', () => {
+    cy.visit(url+'#/members/66453639fc0cfa0022f23401');
+    cy.wait(2000);
+
+    // WHEN: User mofify  name
+ 
+    cy.get('#member-name').clear().type('MemberN',{force: true});
+
+    // WHEN: User clicks on "Save"
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: User should see a success message indicating the member was updated  
+    cy.contains("MemberN").should('be.visible');
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar nombre miembro n [estrategia dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN:User modifty member info
+  it('Modify user name', () => {
+    cy.visit(url+'#/members/66453639fc0cfa0022f23401');
+    cy.wait(2000);
+
+    // WHEN: User mofify  name
+    const name = faker.name.firstName();
+    cy.get('#member-name').clear().type(name,{force: true});
+
+    // WHEN: User clicks on "Save"
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: User should see a success message indicating the member was updated  
+    cy.contains(name).should('be.visible');
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar nombre miembro n [estrategia dato aleatorio ]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN:User modifty member info
+  it('Modify user name', () => {
+    cy.visit(url+'#/members/66453639fc0cfa0022f23401');
+    cy.wait(2000);
+
+    // WHEN: User mofify  name
+    const name = faker.word.words();
+    cy.get('#member-name').clear().type(name,{force: true});
+
+    // WHEN: User clicks on "Save"
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: User should see a success message indicating the member was updated  
+    cy.contains(name).should('be.visible');
+  });
+});
+// GIVEN: User is logged in
+describe('Crear un newsletter  [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN:User creates a new newsletter
+  it('Crear un newsletter', () => {
+    cy.visit(url+'#/settings/newsletters');
+    cy.wait(2000);
+
+    // WHEN: User clicks on "Add newsletter" 
+    cy.contains('Add newsletter').click();
+    cy.wait(2000);
+    cy.get('#newsletter-title').type('My newsletter topic');
+
+    // WHEN: User clicks on "Create"
+    cy.get('[class="gh-btn gh-btn-icon gh-btn-primary ember-view"]').click();
+
+    cy.wait(5000);
+
+    // THEN: User should see a success message indicating the newsletter was created  
+    cy.contains("A newsletter with the same name already exists").should('be.visible');
+  });
+});
+
+// GIVEN: User is logged in
+describe('Crear un newsletter  [estrategia dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User creates a new newsletter
+  it('User creates a new newsletter', () => {
+    cy.visit(url+'#/settings/newsletters');
+    cy.wait(2000);
+    const title = faker.lorem.words();
+    // WHEN: User clicks on "Add newsletter" 
+    cy.contains('Add newsletter').click();
+    cy.wait(2000);
+    cy.get('#newsletter-title').type(title);
+
+    // WHEN: User clicks on "Create"
+    cy.get('[class="gh-btn gh-btn-icon gh-btn-primary ember-view"]').click();
+
+    cy.wait(5000);
+
+    // THEN: User should see a success message indicating the newsletter was created  
+    cy.contains(title).should('be.visible');
+  });
+});
+// GIVEN: User is logged in
+describe('Crear un newsletter  [estrategia dato aleatorio ]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User creates a new newsletterl
+  it('User creates a new newsletter', () => {
+    cy.visit(url+'#/settings/newsletters');
+    cy.wait(2000);
+    const title = faker.word.words();
+    // WHEN: User clicks on "Add newsletter" 
+    cy.contains('Add newsletter').click();
+    cy.wait(2000);
+    cy.get('#newsletter-title').type(title);
+
+    // WHEN: User clicks on "Create"
+    cy.get('[class="gh-btn gh-btn-icon gh-btn-primary ember-view"]').click();
+
+    cy.wait(5000);
+
+    // THEN: User should see a success message indicating the newsletter was created  
+    cy.contains(title).should('be.visible');
+  });
+});
+// GIVEN: User is logged in
+describe('Invitar a un nuevo miembro del personal nuevo [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User navigates to staff settings and sends an invitation with known email
+  it('Accede a la página de configuración de personal y envía una invitación', () => {
+    cy.visit(url+'#/settings/staff');
+    cy.wait(2000);
+
+    // WHEN: User clicks on "Invite" and provides a known email
+    cy.contains('Invite').click();
+    cy.wait(2000);
+    cy.get('input[name="email"]').type('miguel.parra@bizagi.com');
+
+    // WHEN: User clicks on "Send invitation now"
+    cy.contains('Send invitation now').click();
+
+    cy.wait(5000);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Invitar a un nuevo miembro del personal nuevo [estrategia dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User navigates to staff settings and sends an invitation with a valid random email
+  it('Accede a la página de configuración de personal y envía una invitación', () => {
+    cy.visit(url+'#/settings/staff');
+    cy.wait(2000);
+
+    // WHEN: User clicks on "Invite" and provides a valid random email using faker
+    cy.contains('Invite').click();
+    cy.wait(2000);
+    const email = faker.internet.email();
+    cy.get('input[name="email"]').type(email);
+
+    // WHEN: User clicks on "Send invitation now"
+    cy.contains('Send invitation now').click();
+
+    cy.wait(5000);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Invitar a un nuevo miembro del personal nuevo [estrategia dato aleatorio ]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User navigates to staff settings and attempts to send an invitation with invalid random email
+  it('Accede a la página de configuración de personal y envía una invitación', () => {
+    // WHEN: User visits staff settings
+    cy.visit(url+'#/settings/staff');
+    cy.wait(2000);
+
+    // WHEN: User clicks on "Invite"
+    cy.contains('Invite').click();
+    cy.wait(2000);
+
+    // WHEN: User provides an invalid random email using faker
+    const email = faker.word.words();
+    cy.get('input[name="email"]').type(email);
+
+    // WHEN: User clicks on "Send invitation now"
+    cy.contains('Send invitation now').click();
+
+    cy.wait(5000);
+
+    // THEN: User should see an error message indicating an invalid email
+    cy.contains('Invalid Email.').should('be.visible');
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo user-name en la página de configuración de personal [Dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the user-name field with a known value
+  it('Modifica el campo user-name y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User provides a known user-name
+    const newUserName = 'nuevoNombreDeUsuario';
+    cy.get('#user-name')
+    
+      .clear()
+      .type(newUserName,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The user-name field should be successfully updated
+    cy.get('#user-name').should('have.value', newUserName);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo user-name en la página de configuración de personal [Dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the user-name field with valid random data
+  it('Modifica el campo user-name y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates a valid random user-name using faker
+    const newUserName = faker.person.firstName();
+    cy.get('#user-name')
+      
+      .clear()
+      .type(newUserName,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The user-name field should be successfully updated
+    cy.get('#user-name').should('have.value', newUserName);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo user-name en la página de configuración de personal [Dato aleatorio]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the user-name field with valid random words
+  it('Modifica el campo user-name y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates valid random words for user-name using faker
+    const newUserName = faker.word.words();
+    cy.get('#user-name')
+
+      .clear()
+      .type(newUserName,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The user-name field should be successfully updated
+    cy.get('#user-name').should('have.value', newUserName);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo user-location en la página de configuración de personal [Dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the location field with a known value
+  it('Modifica el campo location y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User provides a known location
+    const newLocation = 'Bogota';
+    cy.get('#user-location').scrollIntoView()
+    
+      .clear()
+      .type(newLocation,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The location field should be successfully updated
+    cy.get('#user-location').scrollIntoView().should('have.value', newLocation);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo user-location en la página de configuración de personal [Dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the location field with valid random data
+  it('Modifica el campo location y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates a valid random location using faker
+    const newLocation = faker.location.city();
+    cy.get('#user-location').scrollIntoView()
+
+      .clear()
+      .type(newLocation,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The location field should be successfully updated
+    cy.get('#user-location').scrollIntoView().should('have.value', newLocation);
+  });
+});
+
+
+// GIVEN: User is logged in
+describe('Modificar el campo user-location en la página de configuración de personal [Dato aleatorio ]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the location field with random words
+  it('Modifica el campo location y verifica el cambio', () => {
+    cy.visit(url +'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates random words for location using faker
+    const newLocation = faker.word.words();
+    cy.get('#user-location').scrollIntoView()
+
+      .clear()
+      .type(newLocation,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The location field should be successfully updated
+    cy.get('#user-location').scrollIntoView().should('have.value', newLocation);
+  });
+});
+// GIVEN: User is logged in
+describe('Modificar el campo facebook en la página de configuración de personal [Dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the Facebook field with a known value
+  it('Modifica el campo fb y verifica el cambio', () => {
+    cy.visit(url +'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User provides a known Facebook handle
+    const newFB = 'MiguelParra';
+    cy.get('#user-facebook').scrollIntoView()
+    
+      .clear()
+      .type(newFB,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The Facebook field should be successfully updated with the full Facebook URL
+    cy.get('#user-facebook').scrollIntoView().should('have.value', 'https://www.facebook.com/' + newFB);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo Facebook en la página de configuración de personal [Dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the Facebook field with valid random data
+  it('Modifica el campo fb y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates a valid random Facebook handle using faker
+    const newFB = faker.person.firstName();
+    cy.get('#user-facebook').scrollIntoView()
+      
+      .clear()
+      .type(newFB,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The Facebook field should be successfully updated with the full Facebook URL
+    cy.get('#user-facebook').scrollIntoView().should('have.value', 'https://www.facebook.com/' + newFB);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo FACEBOOK en la página de configuración de personal [Dato aleatorio ]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the Facebook field with valid random words
+  it('Modifica el campo fb y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates valid random words using faker
+    const newFB = faker.word.adjective();
+    cy.get('#user-facebook').scrollIntoView()
+      
+      .clear()
+      .type(newFB,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The Facebook field should be successfully updated with the full Facebook URL
+    cy.get('#user-facebook').scrollIntoView().should('have.value', 'https://www.facebook.com/' + newFB);
+  });
+});
+
+
+// GIVEN: User is logged in
+describe('Modificar el campo twiter en la página de configuración de personal [Dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the Twitter field with a known value
+  it('Modifica el campo twiter y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User provides a known Twitter handle
+    const newt = 'MiguelParra';
+    cy.get('#user-twitter').scrollIntoView()
+  
+      .clear()
+      .type(newt,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The Twitter field should be successfully updated with the full Twitter URL
+    cy.get('#user-twitter').scrollIntoView().should('have.value', 'https://twitter.com/' + newt);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo Twiter en la página de configuración de personal [Dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the Twitter field with valid random data
+  it('Modifica el campo twiter y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates a valid random Twitter handle using faker
+    const newT = faker.person.firstName();
+    cy.get('#user-twitter').scrollIntoView()
+     
+      .clear()
+      .type(newT,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The Twitter field should be successfully updated with the full Twitter URL
+    cy.get('#user-twitter').scrollIntoView().should('have.value', 'https://twitter.com/' + newT);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo Twiter en la página de configuración de personal [Dato aleatorio ]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the Twitter field with valid random words
+  it('Modifica el campo fb y verifica el cambio', () => {
+    cy.visit(url +'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates valid random words using faker
+    const newT = faker.word.adjective();
+    cy.get('#user-twitter').scrollIntoView()
+      
+      .clear()
+      .type(newT,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The Twitter field should be successfully updated with the full Twitter URL
+    cy.get('#user-twitter').scrollIntoView().should('have.value', 'https://twitter.com/' + newT);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo bio en la página de configuración de personal [Dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the bio field with a known value
+  it('Modifica el campo bio y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User provides a known bio
+    const newBio = 'Escritor reconocido en el campo de las pruebas automaticas, esta triste porque los tutores no reconocen su trabajo como tester.';
+    cy.get('#user-bio').scrollIntoView()
+      
+      .clear()
+      .type(newBio,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The bio field should be successfully updated
+    cy.get('#user-bio').scrollIntoView().should('have.value', newBio);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo bio en la página de configuración de personal [Dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the bio field with valid random data
+  it('Modifica el campo bio y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates valid random bio using faker
+    const newBio = faker.lorem.paragraph();
+    cy.get('#user-bio').scrollIntoView()
+     
+      .clear()
+      .type(newBio,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The bio field should be successfully updated
+    cy.get('#user-bio').scrollIntoView().should('have.value', newBio);
+  });
+});
+
+
+// GIVEN: User is logged in
+describe('Modificar el campo Bio en la página de configuración de personal [Dato aleatorio ]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the bio field with valid random words
+  it('Modifica el campo  bio y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates valid random words using faker
+    const newBio = faker.word.words();
+    cy.get('#user-bio').scrollIntoView()
+  
+      .clear()
+      .type(newBio,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The bio field should be successfully updated
+    cy.get('#user-bio').scrollIntoView().should('have.value', newBio);
+  });
+});
+
+
+// GIVEN: User is logged in
+describe('Modificar el campo website en la página de configuración de personal [Dato conocido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the website field with a known value
+  it('Modifica el campo website y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User provides a known website
+    const newWebsite = 'https://sistemas.uniandes.edu.co/es/isis';
+    cy.get('#user-website').scrollIntoView()
+      .clear()
+      .type(newWebsite,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The website field should be successfully updated
+    cy.get('#user-website').scrollIntoView().should('have.value', newWebsite);
+  });
+});
+
+// GIVEN: User is logged in
+describe('Modificar el campo website en la página de configuración de personal [Dato aleatorio valido]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User modifies the website field with valid random data
+  it('Modifica el campo website y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates a valid random website using faker
+    const newWebsite = faker.internet.url();
+    cy.get('#user-website').scrollIntoView()
+      
+      .clear()
+      .type(newWebsite,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The website field should be successfully updated
+    cy.get('#user-website').scrollIntoView().should('have.value', newWebsite);
+  });
+});
+
+
+// GIVEN: User is logged in
+describe('Modificar el campo website en la página de configuración de personal [Dato aleatorio ]', () => {
+  beforeEach(() => {
+    // WHEN: User logs in before each test
+    cy.login();
+  });
+
+  // THEN: User attempts to modify the website field with valid random words
+  it('Modifica el campo website y verifica el cambio', () => {
+    cy.visit(url+'#/settings/staff/grupo');
+    cy.wait(2000);
+
+    // WHEN: User generates valid random words using faker
+    const newWebsite = faker.word.words();
+    cy.get('#user-website').scrollIntoView()
+      
+      .clear()
+      .type(newWebsite,{ force: true });
+
+    // WHEN: User clicks on the "Save" button
+    cy.contains('Save').click();
+
+    cy.wait(5000);
+
+    // THEN: The system should display a message indicating that the website is not a valid URL
+    cy.contains('Website is not a valid url');
+  });
+});
+
+
+
+
 
 // GIVEN: User is logged in
 describe('Crear nueva miembro ', () => {
