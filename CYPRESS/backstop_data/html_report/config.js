@@ -4,7 +4,7 @@ report({
     {
       "pair": {
         "reference": "..\\..\\cypress\\screenshots\\data\\version3_42_0_blackstop\\ghost_vrt_tests_Crear_nueva_pagina_0_document_0_desktop.png",
-        "test": "..\\bitmaps_test\\20240512-005730\\ghost_vrt_tests_Crear_nueva_pagina_0_document_0_desktop.png",
+        "test": "..\\bitmaps_test\\20240512-173335\\ghost_vrt_tests_Crear_nueva_pagina_0_document_0_desktop.png",
         "selector": "document",
         "fileName": "ghost_vrt_tests_Crear_nueva_pagina_0_document_0_desktop.png",
         "label": "Crear nueva pagina",
@@ -19,9 +19,9 @@ report({
             "width": 0,
             "height": 0
           },
-          "rawMisMatchPercentage": 0.022083333333333333,
+          "rawMisMatchPercentage": 0.023125,
           "misMatchPercentage": "0.02",
-          "analysisTime": 27
+          "analysisTime": 44
         }
       },
       "status": "pass"
@@ -29,7 +29,7 @@ report({
     {
       "pair": {
         "reference": "..\\..\\cypress\\screenshots\\data\\version3_42_0_blackstop\\ghost_vrt_tests_Filtros_autores_0_document_0_desktop.png",
-        "test": "..\\bitmaps_test\\20240512-005730\\ghost_vrt_tests_Filtros_autores_0_document_0_desktop.png",
+        "test": "..\\bitmaps_test\\20240512-173335\\ghost_vrt_tests_Filtros_autores_0_document_0_desktop.png",
         "selector": "document",
         "fileName": "ghost_vrt_tests_Filtros_autores_0_document_0_desktop.png",
         "label": "Filtros autores",
@@ -44,9 +44,9 @@ report({
             "width": 0,
             "height": 0
           },
-          "rawMisMatchPercentage": 0.02395833333333333,
+          "rawMisMatchPercentage": 0.023333333333333334,
           "misMatchPercentage": "0.02",
-          "analysisTime": 28
+          "analysisTime": 46
         }
       },
       "status": "pass"
@@ -54,7 +54,7 @@ report({
     {
       "pair": {
         "reference": "..\\..\\cypress\\screenshots\\data\\version3_42_0_blackstop\\ghost_vrt_tests_Crear_nueva_pagina_y_mostrar_preview_0_document_0_desktop.png",
-        "test": "..\\bitmaps_test\\20240512-005730\\ghost_vrt_tests_Crear_nueva_pagina_y_mostrar_preview_0_document_0_desktop.png",
+        "test": "..\\bitmaps_test\\20240512-173335\\ghost_vrt_tests_Crear_nueva_pagina_y_mostrar_preview_0_document_0_desktop.png",
         "selector": "document",
         "fileName": "ghost_vrt_tests_Crear_nueva_pagina_y_mostrar_preview_0_document_0_desktop.png",
         "label": "Crear nueva pagina y mostrar preview",
@@ -69,9 +69,9 @@ report({
             "width": 0,
             "height": 0
           },
-          "rawMisMatchPercentage": 0.023333333333333334,
+          "rawMisMatchPercentage": 0.022916666666666665,
           "misMatchPercentage": "0.02",
-          "analysisTime": 22
+          "analysisTime": 42
         }
       },
       "status": "pass"
@@ -79,7 +79,7 @@ report({
     {
       "pair": {
         "reference": "..\\..\\cypress\\screenshots\\data\\version3_42_0_blackstop\\ghost_vrt_tests_Crear_nuevo_post_y_publicarlo_0_document_0_desktop.png",
-        "test": "..\\bitmaps_test\\20240512-005730\\ghost_vrt_tests_Crear_nuevo_post_y_publicarlo_0_document_0_desktop.png",
+        "test": "..\\bitmaps_test\\20240512-173335\\ghost_vrt_tests_Crear_nuevo_post_y_publicarlo_0_document_0_desktop.png",
         "selector": "document",
         "fileName": "ghost_vrt_tests_Crear_nuevo_post_y_publicarlo_0_document_0_desktop.png",
         "label": "Crear nuevo post y publicarlo",
@@ -94,9 +94,9 @@ report({
             "width": 0,
             "height": 0
           },
-          "rawMisMatchPercentage": 0.02395833333333333,
+          "rawMisMatchPercentage": 0.024166666666666666,
           "misMatchPercentage": "0.02",
-          "analysisTime": 24
+          "analysisTime": 37
         }
       },
       "status": "pass"
@@ -104,7 +104,7 @@ report({
     {
       "pair": {
         "reference": "..\\..\\cypress\\screenshots\\data\\version3_42_0_blackstop\\ghost_vrt_tests_Validate_Recent_Filters_Pages_0_document_0_desktop.png",
-        "test": "..\\bitmaps_test\\20240512-005730\\ghost_vrt_tests_Validate_Recent_Filters_Pages_0_document_0_desktop.png",
+        "test": "..\\bitmaps_test\\20240512-173335\\ghost_vrt_tests_Validate_Recent_Filters_Pages_0_document_0_desktop.png",
         "selector": "document",
         "fileName": "ghost_vrt_tests_Validate_Recent_Filters_Pages_0_document_0_desktop.png",
         "label": "Validate Recent Filters Pages",
@@ -119,9 +119,9 @@ report({
             "width": 0,
             "height": 0
           },
-          "rawMisMatchPercentage": 0,
-          "misMatchPercentage": "0.00",
-          "analysisTime": 17
+          "rawMisMatchPercentage": 0.024374999999999997,
+          "misMatchPercentage": "0.02",
+          "analysisTime": 34
         }
       },
       "status": "pass"

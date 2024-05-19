@@ -855,9 +855,6 @@ describe('Modificar el campo website en la página de configuración de personal
 });
 
 
-
-
-
 // GIVEN: User is logged in
 describe('Crear nueva miembro ', () => {
   beforeEach(() => {
@@ -1221,6 +1218,7 @@ describe('Crear nueva pagina,mostrar  preview ', () => {
 
   });
 });
+
 describe('Validar filtro Published para posts', () => {
   beforeEach(() => {
     cy.login();
@@ -1249,163 +1247,505 @@ describe('Validar filtro Draft para posts', () => {
   });
 });
 
-describe('Validar filtro Scheduled para posts', () => {
+
+
+
+describe('Crear Post con titulo y descripcion vacia  [estrategia dato conocido]', () => {
   beforeEach(() => {
     cy.login();
   });
 
-  it('Debería mostrar las posts Scheduled', () => {
-    const es ='es13'
-    let id =0;
-    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts?type=scheduled')
-    cy.contains('Scheduled posts').should('be.visible');
-    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
-  });
-});
-
-describe('Validar filtro por titulo', () => {
-  beforeEach(() => {
-    cy.login();
-  });
-
-  it('Debería buscar post por titulo', () => {
-    const es ='es14'
-    let id =0;
-    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts')
-    cy.get('.gh-nav-btn-search').click();
-    cy.get('.gh-nav-search-input').type('Coming soon{enter}');
-    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
-  });
-});
-
-describe('Validate Recent Filters Pages', () => {
-  beforeEach(() => {
-    cy.login();
-  });
-
-  it('Debería mostrar los filtros recientes para las paginas', () => {
-    const es ='es15'
-    let id =0;
-    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/pages')
-    cy.get('.gh-contentfilter-sort .ember-power-select-selected-item').click();
+  it('Crear Post con titulo y descripcion vacia  [estrategia dato conocido]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]')
+        .type('This is the post content',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
     cy.wait(2000);
-    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
-  });
-});
-describe('Validar filtros accesos paginas', () => {
-  beforeEach(() => {
-    cy.login();
-  });
-
-  it('Debería mostrar los filtros de accesos para las paginas', () => {
-    const es ='es16'
-    let id =0;
-    cy.viewport(1536, 678)
-
-    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/pages')
-
-    cy.get('.view-actions > .gh-contentfilter > .gh-contentfilter-visibility > .ember-view > .ember-power-select-selected-item').click()
-    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
-  });
-});
-//
-describe('Validar filtro estado paginas', () => {
-  beforeEach(() => {
-    cy.login();
-  });
-
-  it('Debería mostrar los filtros de estado para las paginas', () => {
-
-    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/pages')
-    describe('test_name', function() {
-
-      it('deberia verifiacr el filtro por estado de paginas', function() {
-        const es ='es17'
-        let id =0;
-        cy.viewport(1536, 678)
-
-        cy.visit('https://ghost-cj7h.onrender.com/ghost/#/pages')
-
-        cy.get('.gh-canvas-header-content > .view-actions > .gh-contentfilter > .gh-contentfilter-type > .ember-view').click()
-        cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
-      })
-
-    })
-
-  });
-});
-//
-describe('Crear nuevo post y publicarlo', () => {
-  beforeEach(() => {
-    cy.login();
-  });
-
-  it('Debería crear un nuevo post y publicarlo', () => {
-    const es ='es18'
-    let id =0;
-    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts')
-    cy.get('[class*="ember-view gh-btn gh-btn-primary view-actions-top-row"]') // Target using data-test attribute
-        .type('This is the post title');
-    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
-        .type('This is the post content');
-    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
-    id++;
-    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
-    cy.wait(20000);
     cy.contains('Publish').click();
-    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
-    id++;
     cy.contains('Continue, final review →').click();
-    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
-    id++;
     cy.contains('Publish post, right now').click();
-    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
 
   });
 });
-//
-describe('Eliminar post', () => {
+describe('Crear Post con titulo y descripcion vacia  [estrategia dato aleatorio]', () => {
   beforeEach(() => {
     cy.login();
   });
 
-  it('Debería eliminar un post', () => {
-    cy.viewport(1536, 678)
-    const es ='es19'
-    let id =0;
-
-    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts')
-    cy.get('[class*="ember-view gh-btn gh-btn-primary view-actions-top-row"]') // Target using data-test attribute
-        .type('This is the post title');
+  it('Debería crear un nuevo post y publicarlo  [estrategia dato aleatorio]', () => {
+    const words = faker.word.words();
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
     cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
-        .type('This is the post content');
-    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
-    id++;
-    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click()
-    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
-    cy.contains('Delete').click();
-
-  });
-});
-
-describe('Crear post y programarlo', () => {
-  beforeEach(() => {
-    cy.login();
-  });
-
-  it('Debería crear un post y programarlo', () => {
-    const es ='es20'
-    let id =0;
-    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts')
-    cy.get('[class*="ember-view gh-btn gh-btn-primary view-actions-top-row"]') // Target using data-test attribute
-        .type('This is the post title');
-    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
-        .type('This is the post content');
+        .type(words,{force: true});
     cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
-    cy.wait(20000);
+    cy.wait(2000);
     cy.contains('Publish').click();
-    cy.screenshot(`data/${version}/${es}/${id}.png`, { overwrite: true });
+    cy.contains('Continue, final review →').click();
+    cy.contains('Publish post, right now').click();
+  });
+});
+describe('Crear Post con titulo y descripcion vacia  [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Debería crear un nuevo post y publicarlo  [estrategia dato conocido]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('Know data',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.wait(2000);
+    cy.contains('Publish').click();
+    cy.contains('Continue, final review →').click();
+    cy.contains('Publish post, right now').click();
+  });
+});
+describe('Crear Post con titulo y descripcion de varios caracteres y saltos de linea [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Crear Post con titulo y descripcion vacia  [estrategia dato conocido]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts')
+    cy.get('[class*="ember-view gh-btn gh-btn-primary view-actions-top-row"]') // Target using data-test attribute
+        .type('This is the post title',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('This is the post content',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.wait(2000);
+    cy.contains('Publish').click();
+    cy.contains('Continue, final review →').click();
+    cy.contains('Publish post, right now').click();
+
+  });
+});
+describe('Crear Post con titulo y descripcion de varios caracteres y saltos de linea  [estrategia dato aleatorio]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Debería crear un nuevo post y publicarlo  [estrategia dato aleatorio]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts')
+    const words = faker.word.words();
+    cy.get('[class*="ember-view gh-btn gh-btn-primary view-actions-top-row"]') // Target using data-test attribute
+        .type(words,{force: true});
+    const wordsDescription = faker.word.words();
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type(wordsDescription,{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.wait(2000);
+    cy.contains('Publish').click();
+    cy.contains('Continue, final review →').click();
+    cy.contains('Publish post, right now').click();
+  });
+});
+describe('Crear Post con titulo y descripcion de varios caracteres y saltos de linea [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Debería crear un nuevo post y publicarlo  [estrategia dato conocido]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts')
+    cy.get('[class*="ember-view gh-btn gh-btn-primary view-actions-top-row"]') // Target using data-test attribute
+        .type('Know data',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('Know data',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.wait(2000);
+    cy.contains('Publish').click();
+    cy.contains('Continue, final review →').click();
+    cy.contains('Publish post, right now').click();
+  });
+});
+describe('Crear Post  progamado con titulo y descripcion de varios caracteres y saltos de linea [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Crear Post  progamado con titulo y descripcion de varios caracteres y saltos de linea [estrategia dato conocido]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts')
+    cy.get('[class*="ember-view gh-btn gh-btn-primary view-actions-top-row"]') // Target using data-test attribute
+        .type('This is the post title',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('This is the post content',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.wait(2000);
+    cy.contains('Publish').click();
+
+  });
+});
+describe('Crear Post  progamado con titulo y descripcion de varios caracteres y saltos de linea [estrategia dato aleatorio]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Crear Post  progamado con titulo y descripcion de varios caracteres y saltos de linea [estrategia dato aleatorio]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts')
+    const words = faker.word.words();
+    cy.get('[class*="ember-view gh-btn gh-btn-primary view-actions-top-row"]') // Target using data-test attribute
+        .type(words,{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('This is the post content',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.wait(2000);
+    cy.contains('Publish').click();
+
+  });
+});
+describe('Crear Post  progamado con titulo y descripcion de varios caracteres y saltos de linea  [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Crear Post  progamado con titulo y descripcion de varios caracteres y saltos de linea  [estrategia dato conocido]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/posts')
+    cy.get('[class*="ember-view gh-btn gh-btn-primary view-actions-top-row"]') // Target using data-test attribute
+        .type('This is the post content know',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('This is the post content',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.wait(2000);
+    cy.contains('Publish').click();
+
+  });
+});
+describe('Crear Post  progamado con titulo vacio y descripcion de caracteres [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Crear Post  progamado con titulo vacio y descripcion de caracteres [estrategia dato conocido]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('This is the post content',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.wait(2000);
+    cy.contains('Publish').click();
+
+  });
+});
+describe('Crear Post  progamado con titulo vacio y descripcion de caracteres [estrategia dato aleatorio]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Crear Post  progamado con titulo vacio y descripcion de caracteres [estrategia dato aleatorio]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    const words = faker.word.words();
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type(words,{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.wait(2000);
+    cy.contains('Publish').click();
+
+  });
+});
+describe('Crear Post  progamado con titulo vacio y descripcion de caracteres  [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Crear Post  progamado con titulo vacio y descripcion de caracteres  [estrategia dato conocido]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('This is the post content',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.wait(2000);
+    cy.contains('Publish').click();
 
   });
 });
 
+describe('CCrear un post con solo titulo, descripcion y Excerpt  [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('CCrear un post con solo titulo, descripcion y Excerpt  [estrategia dato conocido]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('This is the post title',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
+    cy.get('[class*="post-setting-custom-excerpt ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('content',{force: true});
+    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
+    cy.wait(2000);
+    cy.contains('Publish').click();
+    cy.contains('Continue, final review →').click();
+    cy.contains('Publish post, right now').click();
+
+  });
+});
+
+describe('CCrear un post con solo titulo, descripcion y Excerpt  [estrategia dato aleatorio]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('CCrear un post con solo titulo, descripcion y Excerpt  [estrategia dato aleatorio]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('This is the post title',{force: true});
+    const words = faker.word.words()
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
+    cy.get('[class*="post-setting-custom-excerpt ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type(words,{force: true});
+    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
+    cy.wait(2000);
+    cy.contains('Publish').click();
+    cy.contains('Continue, final review →').click();
+    cy.contains('Publish post, right now').click();
+
+  });
+});
+
+describe('Crear un post con solo titulo, descripcion y Excerpt  [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Crear un post con solo titulo, descripcion y Excerpt  [estrategia dato conocido]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('This is the post title know',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
+    cy.get('[class*="post-setting-custom-excerpt ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('content konw',{force: true});
+    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
+    cy.wait(2000);
+    cy.contains('Publish').click();
+    cy.contains('Continue, final review →').click();
+    cy.contains('Publish post, right now').click();
+
+  });
+});
+
+describe('Modificar Titulo del post  [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Modificar Titulo del post   [estrategia dato conocido]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]')
+        .type('This is the post content',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.wait(2000);
+    cy.contains('Publish').click();
+    cy.contains('Continue, final review →').click();
+    cy.contains('Publish post, right now').click();
+
+  });
+});
+describe('Modificar Titulo del post   [estrategia dato aleatorio]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Debería Modificar Titulo del post   [estrategia dato aleatorio]', () => {
+    const words = faker.word.words();
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type(words,{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.wait(2000);
+    cy.contains('Publish').click();
+    cy.contains('Continue, final review →').click();
+    cy.contains('Publish post, right now').click();
+  });
+});
+describe('Modificar Titulo del post   [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Debería Modificar Titulo del post   [estrategia dato conocido]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('Know data',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.wait(2000);
+    cy.contains('Publish').click();
+    cy.contains('Continue, final review →').click();
+    cy.contains('Publish post, right now').click();
+  });
+});
+
+
+describe('CCrear un post con solo titulo, descripcion y Excerpt vacio  [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('CCrear un post con solo titulo, descripcion y  Excerpt vacio  [estrategia dato conocido]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('This is the post title',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
+    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
+    cy.wait(2000);
+    cy.contains('Publish').click();
+    cy.contains('Continue, final review →').click();
+    cy.contains('Publish post, right now').click();
+
+  });
+});
+
+describe('CCrear un post con solo titulo, descripcion y  Excerpt vacio  [estrategia dato aleatorio]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('CCrear un post con solo titulo, descripcion y  Excerpt vacio  [estrategia dato aleatorio]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    const words = faker.word.words()
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type(words,{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
+    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
+    cy.wait(2000);
+    cy.contains('Publish').click();
+    cy.contains('Continue, final review →').click();
+    cy.contains('Publish post, right now').click();
+
+  });
+});
+
+describe('CCrear un post con solo titulo, descripcion y Excerpt vacio [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('CCrear un post con solo titulo, descripcion y  Excerpt vacio  [estrategia dato conocido]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('This is the post title know',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
+    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
+    cy.wait(2000);
+    cy.contains('Publish').click();
+    cy.contains('Continue, final review →').click();
+    cy.contains('Publish post, right now').click();
+
+  });
+});
+
+describe('Crear una Tag desde el Post  [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Crear una Tag desde el Post  [estrategia dato conocido]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('This is the post title',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
+    cy.get('[class*="post-setting-custom-excerpt ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('content',{force: true});
+    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
+    cy.wait(2000);
+    cy.contains('Publish').click();
+    cy.contains('Continue, final review →').click();
+    cy.contains('Publish post, right now').click();
+
+  });
+});
+
+describe('Crear una Tag desde el Post  [estrategia dato aleatorio]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Crear una Tag desde el Post  [estrategia dato aleatorio]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('This is the post title',{force: true});
+    const words = faker.word.words()
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
+    cy.get('[class*="post-setting-custom-excerpt ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type(words,{force: true});
+    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
+    cy.wait(2000);
+    cy.contains('Publish').click();
+    cy.contains('Continue, final review →').click();
+    cy.contains('Publish post, right now').click();
+
+  });
+});
+
+describe('Crear una Tag desde el Post  [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Crear una Tag desde el Post  [estrategia dato conocido]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('This is the post title know',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
+    cy.get('[class*="post-setting-custom-excerpt ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('content konw',{force: true});
+    cy.get('[class*="settings-menu-toggle gh-btn gh-btn-editor gh-btn-icon icon-only gh-btn-action-icon"]').click();
+    cy.wait(2000);
+    cy.contains('Publish').click();
+    cy.contains('Continue, final review →').click();
+    cy.contains('Publish post, right now').click();
+
+  });
+});
+
+describe('Crear un post con titulo Vacio y descripcion con caracteres especiales [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Crear un post con titulo Vacio y descripcion con caracteres especiales [estrategia dato conocido]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('This is the post content',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.wait(2000);
+    cy.contains('Publish').click();
+
+  });
+});
+describe('Crear un post con titulo Vacio y descripcion con caracteres especiales [estrategia dato aleatorio]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Crear un post con titulo Vacio y descripcion con caracteres especiales [estrategia dato aleatorio]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    const words = faker.word.words();
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type(words,{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.wait(2000);
+    cy.contains('Publish').click();
+
+  });
+});
+describe('Crear un post con titulo Vacio y descripcion con caracteres especiales  [estrategia dato conocido]', () => {
+  beforeEach(() => {
+    cy.login();
+  });
+
+  it('Crear un post con titulo Vacio y descripcion con caracteres especiales  [estrategia dato conocido]', () => {
+    cy.visit('https://ghost-cj7h.onrender.com/ghost/#/editor/post')
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]') // Target using data-test attribute
+        .type('This is the post content',{force: true});
+    cy.get('[class*="gh-editor-title ember-text-area gh-input ember-view"]').type('{enter}');
+    cy.wait(2000);
+    cy.contains('Publish').click();
+
+  });
+});
