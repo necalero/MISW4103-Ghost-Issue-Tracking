@@ -1,7 +1,7 @@
 Feature: Ver posts
 
 @user1 @web
-Scenario: 012 Validate Post Search by State Draft ... v5.14.1
+Scenario: Validate Post Search by State Draft...v5.14.1
   Given I navigate to page "<SIGNINURL>"
   And I wait for 5 seconds
   When I enter my email "<EMAIL>"

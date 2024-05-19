@@ -1,7 +1,7 @@
 Feature: Ver lista de paginas
 
 @user1 @web
-Scenario: 015 Validate Recent Filters Pages ... v5.14.1
+Scenario: ValidateRecentFiltersPages...v5.14.1
   Given I navigate to page "<SIGNINURL>"
   And I wait for 5 seconds
   When I enter my email "<EMAIL>"

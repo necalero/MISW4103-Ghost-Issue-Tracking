@@ -1,7 +1,7 @@
 Feature: Borrar post
 
 @user1 @web
-Scenario: 019 Delete a post ... v5.14.1
+Scenario: DeleteAPost...v5.14.1
   Given I navigate to page "<SIGNINURL>"
   And I wait for 5 seconds
   When I enter my email "<EMAIL>"

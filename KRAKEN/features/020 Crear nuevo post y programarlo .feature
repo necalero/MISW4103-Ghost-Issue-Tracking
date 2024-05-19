@@ -1,7 +1,7 @@
 Feature: Crear post
 
 @user1 @web
-Scenario: 020 Crear nuevo post y programarlo ... v5.14.1
+Scenario: CrearNuevoPostYProgramarlo...v5.14.1
   Given I navigate to page "<SIGNINURL>"
   And I wait for 5 seconds
   When I enter my email "<EMAIL>"

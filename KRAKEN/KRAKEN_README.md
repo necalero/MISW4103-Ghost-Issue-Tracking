@@ -4,8 +4,6 @@ Suite de pruebas para Ghost utilizando Kraken-Node.
 
 ## Prerequisitos:
 - Node v18.20.0
-- Windows 10
-
 
 ## Pasos para configurar el proyecto:
 

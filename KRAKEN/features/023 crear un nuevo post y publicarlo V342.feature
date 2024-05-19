@@ -1,7 +1,7 @@
 Feature: Crear Post
 
 @user1 @web
-Scenario: 018 Create New Post and Publish it ... v3.42.0
+Scenario: CreateNewPostAndPublishIt...v3.42.0
   Given I navigate to page "<OLDSIGNINURL>"
   And I wait for 2 seconds
   When I enter my email "<EMAIL>"

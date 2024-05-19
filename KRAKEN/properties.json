@@ -6,6 +6,8 @@
     "TAGNAME": "New tag",
     "PAGENAME": "New Page",
     "PAGECONTENT": "Welcome to my new page!",
+    "POSTNAME": "New Post",
+    "POSTCONTENT": "Welcome to my new post!",
     "SIGNINURL": "https://ghost-cj7h.onrender.com/ghost/#/signin",
     "OLDSIGNINURL": "https://ghost-a76u.onrender.com/ghost/#/signin"
 }

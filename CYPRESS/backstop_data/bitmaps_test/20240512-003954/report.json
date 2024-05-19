@@ -1,0 +1,152 @@
+{
+  "testSuite": "BackstopJS",
+  "tests": [
+    {
+      "pair": {
+        "reference": "..\\..\\cypress\\screenshots\\data\\version3_42_0_blackstop\\ghost_vrt_tests_Login_Page_0_document_0_desktop.png",
+        "test": "..\\bitmaps_test\\20240512-003954\\ghost_vrt_tests_Login_Page_0_document_0_desktop.png",
+        "selector": "document",
+        "fileName": "ghost_vrt_tests_Login_Page_0_document_0_desktop.png",
+        "label": "Login Page",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 10,
+        "url": "https://ghost-a76u.onrender.com/ghost/",
+        "expect": 0,
+        "viewportLabel": "desktop",
+        "error": "Reference file not found C:\\Users\\juanR\\OneDrive\\Documentos\\Pruebas automatizadas\\MISW4103-Ghost-Issue-Tracking\\CYPRESS\\cypress\\screenshots\\data\\version3_42_0_blackstop\\ghost_vrt_tests_Login_Page_0_document_0_desktop.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "..\\..\\cypress\\screenshots\\data\\version3_42_0_blackstop\\ghost_vrt_tests_Crear_nueva_pagina_0_document_0_desktop.png",
+        "test": "..\\bitmaps_test\\20240512-003954\\ghost_vrt_tests_Crear_nueva_pagina_0_document_0_desktop.png",
+        "selector": "document",
+        "fileName": "ghost_vrt_tests_Crear_nueva_pagina_0_document_0_desktop.png",
+        "label": "Crear nueva pagina",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 10,
+        "url": "https://ghost-a76u.onrender.com/ghost/#/editor/page",
+        "expect": 0,
+        "viewportLabel": "desktop",
+        "diff": {
+          "isSameDimensions": false,
+          "dimensionDifference": {
+            "width": -670,
+            "height": -255
+          },
+          "rawMisMatchPercentage": 0.39482060185185186,
+          "misMatchPercentage": "0.39",
+          "analysisTime": 72
+        },
+        "diffImage": "..\\bitmaps_test\\20240512-003954\\failed_diff_ghost_vrt_tests_Crear_nueva_pagina_0_document_0_desktop.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "..\\..\\cypress\\screenshots\\data\\version3_42_0_blackstop\\ghost_vrt_tests_Filtros_autores_0_document_0_desktop.png",
+        "test": "..\\bitmaps_test\\20240512-003954\\ghost_vrt_tests_Filtros_autores_0_document_0_desktop.png",
+        "selector": "document",
+        "fileName": "ghost_vrt_tests_Filtros_autores_0_document_0_desktop.png",
+        "label": "Filtros autores",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 10,
+        "url": "https://ghost-a76u.onrender.com/ghost/#/posts?type=published",
+        "expect": 0,
+        "viewportLabel": "desktop",
+        "diff": {
+          "isSameDimensions": false,
+          "dimensionDifference": {
+            "width": -670,
+            "height": -255
+          },
+          "rawMisMatchPercentage": 3.978395061728395,
+          "misMatchPercentage": "3.98",
+          "analysisTime": 84
+        },
+        "diffImage": "..\\bitmaps_test\\20240512-003954\\failed_diff_ghost_vrt_tests_Filtros_autores_0_document_0_desktop.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "..\\..\\cypress\\screenshots\\data\\version3_42_0_blackstop\\ghost_vrt_tests_Crear_nueva_pagina_y_mostrar_preview_0_document_0_desktop.png",
+        "test": "..\\bitmaps_test\\20240512-003954\\ghost_vrt_tests_Crear_nueva_pagina_y_mostrar_preview_0_document_0_desktop.png",
+        "selector": "document",
+        "fileName": "ghost_vrt_tests_Crear_nueva_pagina_y_mostrar_preview_0_document_0_desktop.png",
+        "label": "Crear nueva pagina y mostrar preview",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 10,
+        "url": "https://ghost-a76u.onrender.com/ghost/#/editor/page",
+        "expect": 0,
+        "viewportLabel": "desktop",
+        "diff": {
+          "isSameDimensions": false,
+          "dimensionDifference": {
+            "width": -670,
+            "height": -255
+          },
+          "rawMisMatchPercentage": 0.39033564814814814,
+          "misMatchPercentage": "0.39",
+          "analysisTime": 75
+        },
+        "diffImage": "..\\bitmaps_test\\20240512-003954\\failed_diff_ghost_vrt_tests_Crear_nueva_pagina_y_mostrar_preview_0_document_0_desktop.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "..\\..\\cypress\\screenshots\\data\\version3_42_0_blackstop\\ghost_vrt_tests_Crear_nuevo_post_y_publicarlo_0_document_0_desktop.png",
+        "test": "..\\bitmaps_test\\20240512-003954\\ghost_vrt_tests_Crear_nuevo_post_y_publicarlo_0_document_0_desktop.png",
+        "selector": "document",
+        "fileName": "ghost_vrt_tests_Crear_nuevo_post_y_publicarlo_0_document_0_desktop.png",
+        "label": "Crear nuevo post y publicarlo",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 10,
+        "url": "https://ghost-a76u.onrender.com/ghost/#/posts",
+        "expect": 0,
+        "viewportLabel": "desktop",
+        "diff": {
+          "isSameDimensions": false,
+          "dimensionDifference": {
+            "width": -670,
+            "height": -255
+          },
+          "rawMisMatchPercentage": 0.6197434413580247,
+          "misMatchPercentage": "0.62",
+          "analysisTime": 56
+        },
+        "diffImage": "..\\bitmaps_test\\20240512-003954\\failed_diff_ghost_vrt_tests_Crear_nuevo_post_y_publicarlo_0_document_0_desktop.png"
+      },
+      "status": "fail"
+    },
+    {
+      "pair": {
+        "reference": "..\\..\\cypress\\screenshots\\data\\version3_42_0_blackstop\\ghost_vrt_tests_Validate_Recent_Filters_Pages_0_document_0_desktop.png",
+        "test": "..\\bitmaps_test\\20240512-003954\\ghost_vrt_tests_Validate_Recent_Filters_Pages_0_document_0_desktop.png",
+        "selector": "document",
+        "fileName": "ghost_vrt_tests_Validate_Recent_Filters_Pages_0_document_0_desktop.png",
+        "label": "Validate Recent Filters Pages",
+        "requireSameDimensions": 0.1,
+        "misMatchThreshold": 10,
+        "url": "https://ghost-a76u.onrender.com/ghost/#/pages",
+        "expect": 0,
+        "viewportLabel": "desktop",
+        "diff": {
+          "isSameDimensions": false,
+          "dimensionDifference": {
+            "width": -670,
+            "height": -255
+          },
+          "rawMisMatchPercentage": 3.4752604166666665,
+          "misMatchPercentage": "3.48",
+          "analysisTime": 76
+        },
+        "diffImage": "..\\bitmaps_test\\20240512-003954\\failed_diff_ghost_vrt_tests_Validate_Recent_Filters_Pages_0_document_0_desktop.png"
+      },
+      "status": "fail"
+    }
+  ],
+  "id": "ghost_vrt_tests"
+}

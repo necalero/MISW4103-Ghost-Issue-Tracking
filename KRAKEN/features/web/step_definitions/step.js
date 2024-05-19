@@ -1,6 +1,7 @@
-const { Given, When, Then, Before, AfterStep, After, setWorldConstructor } = require('@cucumber/cucumber');
+const { Given, When, Then, Before, AfterStep, AfterAll, setWorldConstructor } = require('@cucumber/cucumber');
 const compareImages = require("resemblejs/compareImages")
 const config = require("../../../config.json");
+const resembleVrt = require("../../../../VRT-REPORTERS/ResembleVRT/vrtReporter.js");
 const fs = require('fs');
 const {options } = config;
 var step = 1
@@ -15,131 +16,45 @@ function CustomWorld({ attach, parameters, ...other }) {
 
 Before(async function (scenario) {
     this.scenarioName = scenario.pickle.name;
-    await createDirectory(`./reports/VRT/`)
+    let trimmedScenarioName = this.scenarioName.split("...")[0];
+    await createDirectory(`./reports/VRT/`);
+    await createDirectory(`./reports/VRT/Results/`);
+    await createDirectory(`./reports/VRT/Results/${trimmedScenarioName}/`);
+    await createDirectory(`./reports/VRT/Results/${trimmedScenarioName}/Steps/`);
+
+});
+
+AfterAll(async function(){
+    resembleVrt.executeVRT('./reports/VRT');
 });
 
 setWorldConstructor(CustomWorld);
 
 AfterStep(async function () {
-    if (step === 1) {
-        const rutaCarpeta = `./reports/VRT/${this.scenarioName}/`;
-        await fs.promises.mkdir(rutaCarpeta, { recursive: true }, (error) => {
-            if (error) {
-                console.error('Error al crear la carpeta:', error);
-            } else {
-                console.log('Carpeta creada exitosamente');
-            }
-        });        
+
+    let trimmedScenarioName = this.scenarioName.split("...")[0];
+
+    // Convert the integer to a string
+    let stepString = step.toString();
+
+    // Pad the string with leading zeros if necessary
+    while (stepString.length < 3) {
+        stepString = '0' + stepString;
     }
 
+    await createDirectory(`./reports/VRT/Results/${trimmedScenarioName}/Steps/${stepString}/`);  
+
+    let stepPhase = this.scenarioName.includes("v3") ? "before" : "after";
+
     let screenshot = await this.driver.saveScreenshot(
-        `./reports/VRT/${this.scenarioName}/${step}.png`
+        `./reports/VRT/Results/${trimmedScenarioName}/Steps/${stepString}/${stepPhase}.png`
     );
     step ++
     this.attach(screenshot, 'image/png')
 });
 
-After(async function () {
-    // Check if the version being tested is v5.14.1
-    const trimmedScenarioName = this.scenarioName.split('...')[0];
-    if (this.scenarioName.includes('v5')) {
-        // Check if the folder for version 3.42 exists
-        const folderPath = `./reports/VRT/${trimmedScenarioName}...v3.42/`;
-        if (fs.existsSync(folderPath)) {
-            // Run visual regression tests
-            console.log("SUCCESS!! VRT executed for v5.14.1")
-            let itemsInFolder = countItemsInFolder(folderPath);
-            console.log(itemsInFolder);
-            for(let i = 1; i <= itemsInFolder; i ++ )
-            {
-                await executeVRT(trimmedScenarioName, i);
-            }
-
-        } else {
-            console.log('Folder for version 3.42 does not exist. Wont run VRT until screenshots are recollected for other version.');
-        }
-    } else if (this.scenarioName.includes('v3')) {
-        // Check if the folder for version 5.14.1 exists
-        const folderPath = `./reports/VRT/${trimmedScenarioName}...v5.14.1/`;
-        if (fs.existsSync(folderPath)) {
-            // Run visual regression tests
-            console.log("SUCCESS!! VRT executed for v3.42")
-            let itemsInFolder = countItemsInFolder(folderPath);
-            console.log(itemsInFolder);
-            for(let i = 1; i <= itemsInFolder; i ++ )
-            {
-                await executeVRT(trimmedScenarioName, i);
-            }
-        } else {
-            console.log('Folder for version 5.14.1 does not exist. Wont run VRT until screenshots are recollected for other version.');
-        }
-    } else {
-        console.log('Scenario does not belong to either version v5.14.1 or v3.42');
-    }
-});
-
-async function executeVRT(scenarioName, i){
-    console.log("Entered execute VRT function: ");
-
-    try {
-        const imagePathV3 = `./reports/VRT/${scenarioName}...v3.42/${i}.png`;
-        const imagePathV5 = `./reports/VRT/${scenarioName}...v5.14.1/${i}.png`;
-    
-        if (fs.existsSync(imagePathV3) && fs.existsSync(imagePathV5)) {
-            const data = await compareImages(
-                fs.readFileSync(imagePathV3),
-                fs.readFileSync(imagePathV5),
-                options
-            );
-            console.log("Data obtained: "+data.misMatchPercentage);
-            let resultInfo = {}
-            resultInfo[0] = {
-                isSameDimensions: data.isSameDimensions,
-                dimensionDifference: data.dimensionDifference,
-                rawMisMatchPercentage: data.rawMisMatchPercentage,
-                misMatchPercentage: data.misMatchPercentage,
-                diffBounds: data.diffBounds,
-                analysisTime: data.analysisTime
-            }
-            console.log("Result info is: " + JSON.stringify(resultInfo));
-
-            await createDirectory(`./reports/VRT/Results/`);
-            await createDirectory(`./reports/VRT/Results/${scenarioName}`);
-            await createDirectory(`./reports/VRT/Results/${scenarioName}/Steps`);
-            await createDirectory(`./reports/VRT/Results/${scenarioName}/Steps/${i}`);
-            
-            // let comparisonImage = data.getBuffer();
-            let stepReportHtml =  createStepReport(scenarioName, i, resultInfo[0]);
-
-            let steps = {}
-            
-            let stepCount = await countItemsInFolder(`./reports/VRT/${scenarioName}...v3.42/`);
-
-            for(let i = 1; i < stepCount; i++)
-            {
-                steps[i] = i;
-            }
 
 
-
-            let scenarioReportHtml =  createScenarioReport(scenarioName, steps);
-
-            fs.writeFileSync(`./reports/VRT/Results/${scenarioName}/Steps/${i}/compared.png`, data.getBuffer());
-            fs.copyFileSync(imagePathV3, `./reports/VRT/Results/${scenarioName}/Steps/${i}/before.png`);
-            fs.copyFileSync(imagePathV5, `./reports/VRT/Results/${scenarioName}/Steps/${i}/after.png`);
-            if (!fs.existsSync(`./reports/VRT/Results/vrtReport.css`)) {
-                fs.copyFileSync('./vrtReport.css', `./reports/VRT/Results/vrtReport.css`);
-            }
-            fs.writeFileSync(`./reports/VRT/Results/${scenarioName}/Steps/${i}/report.html`, stepReportHtml);
-            fs.writeFileSync(`./reports/VRT/Results/${scenarioName}/report.html`, scenarioReportHtml);
-        } else {
-            console.log('One or both of the images does not exist.');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-    
-}
 
 async function createDirectory(path){
     if (!fs.existsSync(path)) {
@@ -152,111 +67,6 @@ async function createDirectory(path){
         }); 
     }       
 }
-
-function createScenarioReport(scenarioName, steps)
-{
-    return `
-    <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VRT Report</title>
-    <link rel="stylesheet" href="../vrtReport.css" />
-  </head>
-  <body>
-    <header>
-      <h1>Scenario ${scenarioName} Report</h1>
-    </header>
-    <main>
-      <div id="visualizer">
-        <h2>Please select the step you would like to inspect:</h2>
-        <div class="gallery-container" id="scenario-gallery">   
-          ${Object.keys(steps).map(step => createStepCard(step))}
-        </div>
-      </div>
-    </main>
-
-    <script src="script.js"></script>
-  </body>
-</html>
-    
-    `
-}
-
-function createStepCard(step) {
-    return `
-      <div class="gallery-item">
-        <a href="./Steps/${step}/report.html">
-          <img src="./Steps/${step}/compared.png" alt="Step ${step}" />
-          <h3>Step ${step}</h3>
-        </a>
-      </div>
-    `;
-  }
-
-function createStepReport(scenarioName, i, resInfo){
-    return `
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>VRT Report</title>
-        <link rel="stylesheet" href="../../../vrtReport.css" />
-    </head>
-    <body>
-        <header>
-        <h1>${scenarioName} - Step ${i} Report</h1>
-        </header>
-        <main>
-        <div class="main-layout">
-            <div class="comparison-info">
-            <h2>Comparison Information</h2>
-            <ul>
-                <li>Same Dimensions: ${resInfo.isSameDimensions} <span id="sameDimensions"></span></li>
-                <li>MisMatch Percentage: ${resInfo.misMatchPercentage} <span id="misMatchPercentage"></span></li>
-                <li>Analysis Time: ${resInfo.analysisTime} <span id="analysisTime"></span> ms</li>
-            </ul>
-            </div>
-
-            <div class="report-visualizer">
-            <div class="image-container">
-                <div class="image">
-                <img src="./before.png" alt="Before" />
-                <h2>v3.42</h2>
-                </div>
-                <div class="image">
-                <img src="./after.png" alt="After" />
-                <h2>v5.14.1</h2>
-                </div>
-            </div>
-            <div class="final-image-container">
-                <img src="./compared.png" alt="Final" />
-                <h2>Overlap</h2>
-            </div>
-            </div>
-        </div>
-        </main>
-
-        <script src="script.js"></script>
-    </body>
-    </html>
-`
-}
-
-function countItemsInFolder(folderPath) {
-    try {
-        // Read the contents of the folder synchronously
-        const items = fs.readdirSync(folderPath);
-        // Count the number of items
-        const itemCount = items.length;
-        return itemCount;
-    } catch (error) {
-        console.error('Error:', error);
-        return -1; // Return -1 to indicate an error
-    }
-}
-
-
 
 
 
