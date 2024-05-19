@@ -14,5 +14,8 @@
     "appium": "^2.5.4",
     "kraken-node": "^1.0.24",
     "resemblejs": "^5.0.0"
+  },
+  "devDependencies": {
+    "chai": "^5.1.1"
   }
 }

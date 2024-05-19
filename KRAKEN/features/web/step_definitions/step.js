@@ -1,4 +1,5 @@
 const { Given, When, Then, Before, AfterStep, AfterAll, setWorldConstructor } = require('@cucumber/cucumber');
+const assert = require('assert');
 const compareImages = require("resemblejs/compareImages")
 const config = require("../../../config.json");
 const resembleVrt = require("../../../../VRT-REPORTERS/ResembleVRT/vrtReporter.js");
@@ -24,9 +25,9 @@ Before(async function (scenario) {
 
 });
 
-AfterAll(async function(){
+/* AfterAll(async function(){
     resembleVrt.executeVRT('./reports/VRT');
-});
+}); */
 
 setWorldConstructor(CustomWorld);
 
@@ -68,6 +69,20 @@ async function createDirectory(path){
     }       
 }
 
+// Function to generate pseudo-random hexadecimal color codes
+function generateRandomColor() {
+    return '' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+}
+
+// Function to generate a n-character string
+function generateStringByLength(n) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < n; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+}
 
 
 When('I enter my email {kraken-string}', async function (value) {
@@ -252,6 +267,157 @@ When('I click on State', async function(){
     return await element.click();
 });
 
+When('I enter an invalid password {kraken-string}', async function (value) {
+    let element = await this.driver.$('#login.gh-signin > div > span.gh-input-icon.gh-icon-lock.forgotten-wrap > input');
+    return await element.setValue(value);
+});
+
+When('I enter an invalid email {kraken-string}', async function (value) {
+    let element = await this.driver.$('#login.gh-signin > div > span.gh-input-icon.gh-icon-mail > input');
+    return await element.setValue(value);
+});
+
+When('I enter the tag slug {kraken-string}', async function (value) {
+    let element = await this.driver.$('#tag-slug');
+    return await element.setValue(value);
+});
+
+When('I enter a pseudo-random tag color', async function(){
+    let element = await this.driver.$('div > main > section > form > div:nth-child(2) > section > div > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div > input');
+    let randomColor = generateRandomColor();
+    return await element.setValue(randomColor);
+});
+
+When('I enter the description {kraken-string}', async function (value) {
+    let element = await this.driver.$('#tag-description');
+    return await element.setValue(value);
+});
+
+When('I enter a random tag color {kraken-string}', async function (value) {
+    let element = await this.driver.$('div > main > section > form > div:nth-child(2) > section > div > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div > input');
+    return await element.setValue(value);
+});
+
+When('I enter a 499 character description', async function(){
+    let element = await this.driver.$('#tag-description');
+    let validDescription = generateStringByLength(499);
+    return await element.setValue(validDescription);
+});
+
+When('I enter a 500 character description', async function(){
+    let element = await this.driver.$('#tag-description');
+    let validDescription = generateStringByLength(500);
+    return await element.setValue(validDescription);
+});
+
+When('I enter a 501 character description', async function(){
+    let element = await this.driver.$('#tag-description');
+    let validDescription = generateStringByLength(501);
+    return await element.setValue(validDescription);
+});
+
+When('I enter a 190 character tag name', async function(){
+    let element = await this.driver.$('#tag-name');
+    let name = generateStringByLength(190);
+    return await element.setValue(name);
+});
+
+When('I enter a 191 character tag name', async function(){
+    let element = await this.driver.$('#tag-name');
+    let name = generateStringByLength(191);
+    return await element.setValue(name);
+});
+
+When('I enter a 192 character tag name', async function(){
+    let element = await this.driver.$('#tag-name');
+    let name = generateStringByLength(192);
+    return await element.setValue(name);
+});
+
+When('I enter a 190 character tag slug', async function(){
+    let element = await this.driver.$('#tag-slug');
+    let name = generateStringByLength(190);
+    return await element.setValue(name);
+});
+
+When('I enter a 191 character tag slug', async function(){
+    let element = await this.driver.$('#tag-slug');
+    let name = generateStringByLength(191);
+    return await element.setValue(name);
+});
+
+When('I enter a 192 character tag slug', async function(){
+    let element = await this.driver.$('#tag-slug');
+    let name = generateStringByLength(192);
+    return await element.setValue(name);
+});
+
+When('I enter a 69 character email for the member', async function(){
+    let element = await this.driver.$('#member-email');
+    let longString = generateStringByLength(63);
+    let email = longString+'@a.com';
+    return await element.setValue(email);
+});
+
+When('I enter a 70 character email for the member', async function(){
+    let element = await this.driver.$('#member-email');
+    let longString = generateStringByLength(64);
+    let email = longString+'@a.com';
+    return await element.setValue(email);
+});
+
+When('I enter a 71 character email for the member', async function(){
+    let element = await this.driver.$('#member-email');
+    let longString = generateStringByLength(65);
+    let email = longString+'@a.com';
+    return await element.setValue(email);
+});
+
+When('I enter the new member valid email {kraken-string}', async function (value) {
+    let element = await this.driver.$('#member-email');
+    let memberEmail = value + '@gmail.com';
+    return await element.setValue(memberEmail);
+});
+
+When('I enter a 499 character note', async function(){
+    let element = await this.driver.$('#member-note');
+    let note = generateStringByLength(499);
+    return await element.setValue(note);
+});
+
+When('I enter a 500 character note', async function(){
+    let element = await this.driver.$('#member-note');
+    let note = generateStringByLength(500);
+    return await element.setValue(note);
+});
+
+When('I enter a 501 character note', async function(){
+    let element = await this.driver.$('#member-note');
+    let note = generateStringByLength(501);
+    return await element.setValue(note);
+});
+
+When('I enter a 190 character member name', async function(){
+    let element = await this.driver.$('#member-name');
+    let name = generateStringByLength(190);
+    return await element.setValue(name);
+});
+
+When('I enter a 191 character member name', async function(){
+    let element = await this.driver.$('#member-name');
+    let name = generateStringByLength(191);
+    return await element.setValue(name);
+});
+
+When('I enter a 192 character member name', async function(){
+    let element = await this.driver.$('#member-name');
+    let name = generateStringByLength(192);
+    return await element.setValue(name);
+});
+
+
+// ----------------------------------------------- THEN -------------------------------------------------------
+
 Then('I select Right Now', async function () {
     let element = await this.driver.$('div.gh-publish-setting.last > button');
     await element.click();
@@ -394,8 +560,101 @@ Then('I should get an error message that specifies that the member already exist
     return await element.click();
 });
 
+Then('I should see an incorrect password message', async function () {
+    let element = await this.driver.$('body.ember-application.unauthenticated-route > div.gh-app > div.gh-viewport > main.gh-main > div.gh-flow > div.gh-flow-content-wrap > section.gh-flow-content > p.main-error');
+    let errorMessage = await element.getText();
+    let expectedError = "Your password is incorrect.";
+    assert.ok(errorMessage.includes(expectedError), `Error message "${errorMessage}" does not contain ${expectedError}`);
+});
 
+Then('I should see a message to fill out the form', async function () {
+    let element = await this.driver.$('body.ember-application.unauthenticated-route > div.gh-app > div.gh-viewport > main.gh-main > div.gh-flow > div.gh-flow-content-wrap > section.gh-flow-content > p.main-error');
+    let errorMessage = await element.getText();
+    let expectedError = "Please fill out the form to sign in.";
+    assert.ok(errorMessage.includes(expectedError), `Error message "${errorMessage}" does not contain ${expectedError}`);
+});
 
+Then('I should see an error message of no user', async function () {
+    let element = await this.driver.$('body.ember-application.unauthenticated-route > div.gh-app > div.gh-viewport > main.gh-main > div.gh-flow > div.gh-flow-content-wrap > section.gh-flow-content > p.main-error');
+    let errorMessage = await element.getText();
+    let expectedError = "There is no user with that email address";
+    assert.ok(errorMessage.includes(expectedError), `Error message "${errorMessage}" does not contain ${expectedError}`);
+});
+
+Then('I should see that I should specify a name for the tag', async function () {
+    let element = await this.driver.$('div > main > section > form > div:nth-child(2) > section > div > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > span > p:nth-child(1)');
+    let errorMessage = await element.getText();
+    let expectedError = "You must specify a name for the tag.";
+    assert.ok(errorMessage.includes(expectedError), `Error message "${errorMessage}" does not contain ${expectedError}`);
+});
+
+Then('I should see that the color should be an hex value', async function () {
+    let element = await this.driver.$('div > main > section > form > div:nth-child(2) > section > div > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > span > p:nth-child(2)');
+    let errorMessage = await element.getText();
+    let expectedError = "The colour should be in valid hex format";
+    assert.ok(errorMessage.includes(expectedError), `Error message "${errorMessage}" does not contain ${expectedError}`);
+});
+
+Then('I should see the description too long error message', async function () {
+    let element = await this.driver.$('div > main > section > form > div:nth-child(2) > section > div > div:nth-child(1) > div:nth-child(3) > p:nth-of-type(1)');
+    let errorMessage = await element.getText();
+    let expectedError = "Description cannot be longer than 500 characters";
+    assert.ok(errorMessage.includes(expectedError), `Error message "${errorMessage}" does not contain ${expectedError}`);
+});
+
+Then('I should see the tag name too long error message', async function () {
+    let element = await this.driver.$('div:nth-of-type(2) > div > main > section > form > div:nth-of-type(2) > section > div > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > span > p:nth-of-type(1)');
+    let errorMessage = await element.getText();
+    let expectedError = "Tag names cannot be longer than 191 characters";
+    assert.ok(errorMessage.includes(expectedError), `Error message "${errorMessage}" does not contain ${expectedError}`);
+});
+
+Then('I should see the tag slug too long error message', async function () {
+    let element = await this.driver.$('div:nth-of-type(2) > div > main > section > form > div:nth-of-type(2) > section > div > div:nth-of-type(1) > div:nth-of-type(2) > p:nth-of-type(2)');
+    let errorMessage = await element.getText();
+    let expectedError = "URL cannot be longer than 191 characters";
+    assert.ok(errorMessage.includes(expectedError), `Error message "${errorMessage}" does not contain ${expectedError}`);
+});
+
+Then('I should get a message asking me to enter an email', async function () {
+    let element = await this.driver.$('div:nth-of-type(2) > div > main > section > div:nth-of-type(2) > form > div > section > div > div:nth-of-type(1) > div > div:nth-of-type(1) > div:nth-of-type(2) > p');
+    let errorMessage = await element.getText();
+    let expectedError = "Please enter an email";
+    assert.ok(errorMessage.includes(expectedError), `Error message "${errorMessage}" does not contain ${expectedError}`);
+});
+
+Then('I should see the new member', async function () {
+    let element = await this.driver.$('body.ember-application > div.gh-app > div.gh-viewport > nav.gh-nav > div.flex.flex-column.h-100 > section.gh-nav-body > div.gh-nav-top > ul:nth-child(2) > li:nth-child(4)');
+    return await element.click();
+});
+
+Then('I should see the saved message', async function () {
+    let element = await this.driver.$('div:nth-of-type(2) > div > main > section > div:nth-of-type(1) > header > section > button > span');
+    let responseMessage = await element.getText();
+    let expectedResponse = "Saved";
+    assert.ok(responseMessage.includes(expectedResponse), `Response message "${responseMessage}" does not contain ${expectedResponse}`);
+});
+
+Then('I should see the invalid email error message', async function () {
+    let element = await this.driver.$('div:nth-of-type(2) > div > main > section > div:nth-of-type(2) > form > div > section > div > div:nth-of-type(1) > div > div:nth-of-type(1) > div:nth-of-type(2) > p');
+    let errorMessage = await element.getText();
+    let expectedError = "Invalid Email";
+    assert.ok(errorMessage.includes(expectedError), `Error message "${errorMessage}" does not contain ${expectedError}`);
+});
+
+Then('I should see the note too long error message', async function () {
+    let element = await this.driver.$('div:nth-of-type(2) > div > main > section > div:nth-of-type(2) > form > div > section > div > div:nth-of-type(1) > div > div:nth-of-type(3) > p:nth-of-type(1)');
+    let errorMessage = await element.getText();
+    let expectedError = "Note is too long.";
+    assert.ok(errorMessage.includes(expectedError), `Error message "${errorMessage}" does not contain ${expectedError}`);
+});
+
+Then('I should see the invalid name message', async function () {
+    let element = await this.driver.$('div:nth-of-type(2) > div > main > section > div:nth-of-type(1) > header > section > button > span');
+    let responseMessage = await element.getText();
+    let expectedResponse = "Retry";
+    assert.ok(responseMessage.includes(expectedResponse), `Response message "${responseMessage}" does not contain ${expectedResponse}`);
+});
 
 // ---------------------------------- STEPS FOR GHOST V3.42 VERSION -------------------------------------------------------
 
